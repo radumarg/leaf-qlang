@@ -423,9 +423,9 @@ let bs: [bit; 8] = [0, 1, 1, 0, 0, 1, 0, 0];
     X(t);
   }
 
-  // (56) quantum case statements:
+  // (56) quantum match statements:
 
-  qcase ctrl {
+  qmatch ctrl {
     0 => {
         U0(data);
     }
@@ -434,14 +434,14 @@ let bs: [bit; 8] = [0, 1, 1, 0, 0, 1, 0, 0];
     }
   }
 
-  qcase ctrl {
+  qmatch ctrl {
     b"00" => { U00(data); }
     b"01" => { U01(data); }
     b"10" => { U10(data); }
     b"11" => { U11(data); }
   }
 
-  qcase ctrl {
+  qmatch ctrl {
     0 => { U00(data); }
     1 => { U01(data); }
     2 => { U10(data); }
