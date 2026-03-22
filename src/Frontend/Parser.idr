@@ -346,6 +346,9 @@ parseLiteral tokens =
     (B (TokStringLit rawString) _ :: rest) =>
       Right (LitString rawString, rest)
 
+    (B (TokBitStringLit rawBits) _ :: rest) =>
+      Right (LitBitString rawBits, rest)
+
     (B (TokKw KwTrue) _ :: rest) =>
       Right (LitBool True, rest)
 
@@ -395,6 +398,11 @@ parsePatternFuel (S fuel) tokens =
         Right (lit, rest) => Right (PatLit lit, rest)
 
     (B (TokStringLit _) _ :: _) =>
+      case parseLiteral tokens of
+        Left err => Left err
+        Right (lit, rest) => Right (PatLit lit, rest)
+
+    (B (TokBitStringLit _) _ :: _) =>
       case parseLiteral tokens of
         Left err => Left err
         Right (lit, rest) => Right (PatLit lit, rest)
@@ -1019,6 +1027,57 @@ mutual
                     Right (StmtReturn (Just returnValueExpr), tokens3)
 
   --------------------------------------------------------------------------------
+  -- A parser for qmatch
+  --------------------------------------------------------------------------------
+  parseQMatchLabel : Parser QMatchLabel
+  parseQMatchLabel tokens =
+    case tokens of
+      (B (TokIntLitRaw rawDigits) rawBounds :: rest) =>
+        case digitsToNat rawDigits of
+          Just n  => Right (QMatchLabelNat n, rest)
+          Nothing => Left (B (ParseExpected "qmatch decimal label") rawBounds)
+
+      (B (TokBitStringLit bits) _ :: rest) =>
+        Right (QMatchLabelBitString bits, rest)
+
+      _ =>
+        failAtHead (ParseExpected "qmatch label (decimal integer or bitstring literal)") tokens
+
+  parseQMatchArm : Nat -> Parser QMatchArm
+  parseQMatchArm Z tokens =
+    failAtHead (ParseFuelExhausted "qmatch arm") tokens
+
+  parseQMatchArm (S fuelLeft) tokens =
+    case parseQMatchLabel tokens of
+      Left err => Left err
+      Right (label, tokens1) =>
+        case expectSymbol SymFatArrow tokens1 of
+          Left err => Left err
+          Right ((), tokens2) =>
+            case parseBlockExprFuel fuelLeft tokens2 of
+              Left err => Left err
+              Right (bodyBlk, tokens3) =>
+                Right (MkQMatchArm label bodyBlk, tokens3)
+
+  parseQMatchArms : Nat -> Parser (List QMatchArm)
+  parseQMatchArms Z tokens =
+    failAtHead (ParseFuelExhausted "qmatch arms") tokens
+
+  parseQMatchArms (S fuelLeft) tokens =
+    case peekToken tokens of
+      Just (TokSym SymRBrace) =>
+        Right ([], tokens)
+
+      _ =>
+        case parseQMatchArm fuelLeft tokens of
+          Left err => Left err
+          Right (arm, tokens1) =>
+            case parseQMatchArms fuelLeft tokens1 of
+              Left err => Left err
+              Right (moreArms, tokens2) =>
+                Right (arm :: moreArms, tokens2)
+
+  --------------------------------------------------------------------------------
   -- ATOMS (Expr forms that do not start with infix operators)
   --------------------------------------------------------------------------------
   parseAtom : Nat -> Parser Expr
@@ -1148,6 +1207,25 @@ mutual
                           Left err => Left err
                           Right ((), tokens5) =>
                             Right (EMatch scrutineeExpr arms, tokens5)
+
+      -- qmatch scrutinee { 0 => { ... } b"01" => { ... } }
+      Just (TokKw KwQmatch) =>
+        case expectKeyword KwQmatch tokens of
+          Left err => Left err
+          Right ((), tokens1) =>
+            case parseExprPrec fuelLeft 0 tokens1 of
+              Left err => Left err
+              Right (scrutineeExpr, tokens2) =>
+                case expectSymbol SymLBrace tokens2 of
+                  Left err => Left err
+                  Right ((), tokens3) =>
+                    case parseQMatchArms fuelLeft tokens3 of
+                      Left err => Left err
+                      Right (arms, tokens4) =>
+                        case expectSymbol SymRBrace tokens4 of
+                          Left err => Left err
+                          Right ((), tokens5) =>
+                            Right (EQMatch scrutineeExpr arms, tokens5)
 
       -- Builtins (keywords): abs / adjoint / acos / asin / atan / ceil / cos / discard / exp / floor / ln / log10 / log2 / max / measr / min / pow / qalloc / reset / round / sin / sqrt / tan / uncompute
       Just (TokKw KwAbs) =>
@@ -1423,6 +1501,7 @@ mutual
                   Left err => Left err
                   Right ((), tokensAfterRParen) =>
                     Right (EBuiltinCall builtinName args, tokensAfterRParen)
+
 
 --------------------------------------------------------------------------------
 -- TOP-LEVEL: function declarations + program parsing

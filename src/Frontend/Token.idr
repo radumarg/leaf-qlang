@@ -24,7 +24,7 @@ data Keyword
   | KwElse | KwExp | KwFalse | KwFloor | KwFn | KwFor | KwGeneral | KwIf | KwImport | KwIn
   | KwLet | KwLn | KwALin | KwLog10 | KwLog2 | KwLoop
   | KwMatch | KwMax | KwMeasr | KwMin | KwNegCtrl
-  | KwPow | KwRound | KwQAlloc | KwQcase | KwQelse | KwQif | KwReset | KwReturn
+  | KwPow | KwRound | KwQAlloc | KwQelse | KwQif | KwQmatch | KwReset | KwReturn
   | KwScratch | KwSin | KwSqrt | KwTan | KwTrue | KwUncompute | KwUnitary | KwWhile
 
 ----------------------------------------------------------------------
@@ -66,14 +66,15 @@ data Symbol
 ----------------------------------------------------------------------
 public export
 data Token
-  = TokIdent       String
-  | TokIntLitRaw   String
-  | TokFloatLitRaw String
-  | TokStringLit   String
-  | TokKw          Keyword
-  | TokTypPrim     TypPrimName
-  | TokGate        GateName
-  | TokSym         Symbol
+  = TokIdent        String
+  | TokIntLitRaw    String
+  | TokFloatLitRaw  String
+  | TokBitStringLit String
+  | TokStringLit    String
+  | TokKw           Keyword
+  | TokTypPrim      TypPrimName
+  | TokGate         GateName
+  | TokSym          Symbol
   | TokUnderscore
 
 ----------------------------------------------------------------------
@@ -121,9 +122,9 @@ keywordFromString s =
     "negctrl"   => Just KwNegCtrl
     "pow"       => Just KwPow
     "qalloc"    => Just KwQAlloc
-    "qcase"     => Just KwQcase
     "qelse"     => Just KwQelse
     "qif"       => Just KwQif
+    "qmatch"    => Just KwQmatch
     "round"     => Just KwRound
     "reset"     => Just KwReset
     "return"    => Just KwReturn

@@ -6,7 +6,7 @@
 // (param?): bind value, get name let p:Param = param("theta1")
 
 // (2) Reserved Keywords: 
-  adjoint, affin, as, barrier, break, classical, ctrl, continue, discard, else, false, fn, for, general, if, import, in, let, lin, loop, measr, negctrl, pow, qalloc, qif, qcase, qelse, reset, return, scratch, true, unitary, uncompute, while
+  adjoint, affin, as, barrier, break, classical, ctrl, continue, discard, else, false, fn, for, general, if, import, in, let, lin, loop, measr, negctrl, pow, qalloc, qif, qelse, qmatch, reset, return, scratch, true, unitary, uncompute, while
 
 // (3) Operators Reserved Symbols and Keywords: 
   '?', '&', '(', ')', ',', ';', '=', '+', '-', '*', '/', '%', '+=', '-=', '*=', '/=', '%=', '>', '>=', '<', '<=', '..', '()', ':', '[', ']', '{', '}', '==', '!=', '&&', '||', '!', '.', '..=', '::', '|', '^', '->', ':='

@@ -22,6 +22,7 @@ data LexerErr
   = LexUnexpectedChar Char
   | LexUnterminatedString
   | LexUnterminatedBlockComment
+  | LexInvalidBitStringLiteral String
   | LexInvalidNumberLiteral String
   | LexFuelExhausted
 
@@ -166,6 +167,45 @@ lexStringLiteral stringQuoteStartPosition charsAfterQuote =
           go (advanceMany currentPosition [c]) (c :: accumulatorChars) rest
   in
     go scanStartPosition [] charsAfterQuote
+
+--------------------------------------------------------------------------------
+-- Bitstring literal lexing: b"0101"
+-- Accepts only characters '0' and '1' between the quotes.
+--
+-- This function expects:
+--   * bitStringStartPosition = position of the 'b'
+--   * charsAfterPrefix       = characters AFTER the prefix b"
+--------------------------------------------------------------------------------
+lexBitStringLiteral : Position -> List Char -> Either (Bounded LexerErr) (String, Position, List Char)
+lexBitStringLiteral bitStringStartPosition charsAfterPrefix =
+  let
+    scanStartPosition : Position
+    scanStartPosition = advanceMany bitStringStartPosition ['b', '"']
+
+    go : Position -> List Char -> List Char -> Either (Bounded LexerErr) (String, Position, List Char)
+    go currentPosition accumulatorChars cs =
+      case cs of
+        [] =>
+          Left (mkBoundedHere LexUnterminatedString bitStringStartPosition currentPosition)
+
+        '"' :: rest =>
+          let endPosition = advanceMany currentPosition ['"'] in
+          Right (pack (reverse accumulatorChars), endPosition, rest)
+
+        '0' :: rest =>
+          go (advanceMany currentPosition ['0']) ('0' :: accumulatorChars) rest
+
+        '1' :: rest =>
+          go (advanceMany currentPosition ['1']) ('1' :: accumulatorChars) rest
+
+        c :: _ =>
+          Left
+            (mkBoundedHere
+              (LexInvalidBitStringLiteral ("invalid bitstring character: " ++ singleton c))
+              bitStringStartPosition
+              (advanceMany currentPosition [c]))
+  in
+    go scanStartPosition [] charsAfterPrefix
 
 --------------------------------------------------------------------------------
 -- Number lexing:
@@ -382,14 +422,24 @@ where
               let boundedToken = mkBoundedHere token currentPosition endPosition
               in (boundedToken ::) <$> go fuelLeft endPosition remainingChars
 
-        -- 6) identifier/keyword/type/gate
+        -- 6) bitstring literal: b"..."
+        else if c == 'b' && startsWithList ['b', '"'] (c :: rest) then
+          let charsAfterPrefix = dropList 2 (c :: rest) in
+          case lexBitStringLiteral currentPosition charsAfterPrefix of
+            Left err => Left err
+            Right (bitStringValue, endPosition, remainingChars) =>
+              let boundedToken =
+                    mkBoundedHere (TokBitStringLit bitStringValue) currentPosition endPosition
+              in (boundedToken ::) <$> go fuelLeft endPosition remainingChars
+
+        -- 7) identifier/keyword/type/gate
         else if isIdentStartChar c then
           let (token, endPosition, remainingChars) =
                 lexIdentOrKeywordOrTypeOrGate currentPosition (c :: rest)
               boundedToken = mkBoundedHere token currentPosition endPosition
           in (boundedToken ::) <$> go fuelLeft endPosition remainingChars
 
-        -- 7) symbols/operators
+        -- 8) symbols/operators
         else
           case lexSymbol currentPosition (c :: rest) of
             Left err => Left err

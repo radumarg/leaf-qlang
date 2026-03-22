@@ -132,11 +132,12 @@ data BinaryOp : Type where
 ------------------------------------------------------------------------------
 public export
 data Literal : Type where
-  LitIntRaw   : String -> Literal
-  LitFloatRaw : String -> Literal
-  LitBool     : Bool -> Literal
-  LitString   : String -> Literal
-  LitUnit     : Literal
+  LitIntRaw     : String -> Literal
+  LitFloatRaw   : String -> Literal
+  LitBool       : Bool -> Literal
+  LitString     : String -> Literal
+  LitBitString  : String -> Literal
+  LitUnit       : Literal
 
 -- Primitive built-in types
 public export
@@ -293,6 +294,9 @@ mutual
     -- match scrutinee { pat => expr, ... }
     EMatch : (typScrutineeExpr : Expr) -> (typArms : List MatchArm) -> Expr
 
+    -- qmatch scrutinee { 0 => { ... } b"01" => { ... } }
+    EQMatch : (typScrutineeExpr : Expr) -> (typArms : List QMatchArm) -> Expr
+
     -- { statements; tailExpr? }
     EBlock : BlockExpr -> Expr
 
@@ -312,6 +316,17 @@ mutual
     -- control prefixes apply to a block:
     --   ctrl(q0,q1) { H(q2); CX(q2,q3); }
     EControlBlock : (typControlPrefixes : List ControlPrefix) -> (typBlockExpr : BlockExpr) -> Expr
+
+  public export
+  data QMatchLabel : Type where
+    QMatchLabelNat       : Nat -> QMatchLabel
+    QMatchLabelBitString : String -> QMatchLabel
+
+  public export
+  record QMatchArm where
+    constructor MkQMatchArm
+    qmatchLabel    : QMatchLabel
+    qmatchBodyExpr : BlockExpr
 
   public export
   record MatchArm where
@@ -419,8 +434,10 @@ implementation Eq Expr where
 %runElab derive "ControlArg" [Show, Eq]
 %runElab derive "ControlPrefix" [Show, Eq]
 %runElab derive "MatchArm" [Show, Eq]
+%runElab derive "QMatchLabel" [Show, Eq]
 %runElab derive "Stmt" [Show, Eq]
 %runElab derive "BlockExpr" [Show, Eq]
+%runElab derive "QMatchArm" [Show, Eq]
 %runElab derive "FnParam" [Show, Eq]
 %runElab derive "FnDecl" [Show, Eq]
 %runElab derive "Item" [Show, Eq]
