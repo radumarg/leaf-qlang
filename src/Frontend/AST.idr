@@ -408,17 +408,9 @@ record Program where
 ------------------------------------------------------------------------------
 -- Derivations for debugging/testing
 ------------------------------------------------------------------------------
-
--- Minimal Show instance to break mutual
--- recursion between Expr and control types
-public export
-implementation Show Expr where
-  showPrec _ _ = "<expr>"
-
--- Minimal Eq instance for Expr
-public export
-implementation Eq Expr where
-  (==) _ _ = False
+-- Keep only non-recursive derives here. The recursive AST family rooted at
+-- Expr is implemented manually in Frontend.ExprPrettyPrinter to avoid cycles
+-- in derived Show/Eq resolution.
 
 %runElab derive "GateName" [Show, Eq]
 %runElab derive "BuiltinName" [Show, Eq]
@@ -431,14 +423,5 @@ implementation Eq Expr where
 %runElab derive "TypExpr" [Show, Eq]
 %runElab derive "Pattern" [Show, Eq]
 %runElab derive "ControlNamedArg" [Show, Eq]
-%runElab derive "ControlArg" [Show, Eq]
-%runElab derive "ControlPrefix" [Show, Eq]
-%runElab derive "MatchArm" [Show, Eq]
 %runElab derive "QMatchLabel" [Show, Eq]
-%runElab derive "Stmt" [Show, Eq]
-%runElab derive "BlockExpr" [Show, Eq]
-%runElab derive "QMatchArm" [Show, Eq]
 %runElab derive "FnParam" [Show, Eq]
-%runElab derive "FnDecl" [Show, Eq]
-%runElab derive "Item" [Show, Eq]
-%runElab derive "Program" [Show, Eq]

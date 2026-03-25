@@ -1,6 +1,7 @@
 module Test.ParserTests
 
 import Frontend.AST
+import Frontend.ExprPrettyPrinter
 import Frontend.Lexer
 import Frontend.Parser
 import Frontend.Token
