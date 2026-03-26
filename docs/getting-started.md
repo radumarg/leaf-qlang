@@ -4,9 +4,10 @@ By and large Leaf is on purpose replicating the Rust syntax with minimal extensi
 Leaf software stack and code lifetime:
 
  - Frontend (Rust like)
- - ==> Typechecker (Silq Inspired)
- - ==> IR Lowering Compiler
- - ==> Lambda Calculus / Quantum Lambda Calculus based IR <===> Formal Verification Support
- - ==> Idris2 DSL
- - ==> OpenQasm3 Serializer
- - ==> OpenQasm3
+ - Typechecker (Silq Inspired)
+ - IR Lowering (Compile Pass)
+ - Lambda Calculus / Quantum Lambda Calculus based IR <===> Formal Verification Support
+ - DSL Translation (Compile Pass)
+ - Idris2 DSL
+ - Serializer
+ - OpenQasm3/QIR
