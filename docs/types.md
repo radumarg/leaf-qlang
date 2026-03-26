@@ -1,11 +1,11 @@
 # Leaf basic types
 
 ```rust
-// unit type:
-()
+// quantum computing specific:
+bit, qubit
 
-// boolean type:
-bool
+// additional quantum types:
+angle, Param
 
 // signed integer types:  
 i8, i16, i32, i64, i128
@@ -16,6 +16,10 @@ u8, u16, u32, u64, u128
 // floating-point types:
 f32, f64
 
-// quantum computing specific types:
-bit, qubit, angle, Param
+// boolean type:
+bool
+
+// unit type:
+()
+
 ```
