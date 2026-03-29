@@ -42,5 +42,30 @@ runTest fileName laxParseExpression strictParseExpression {debug} = do
 
 main : IO ()
 main = do
-  runTest "src/Test/Good/Types/i8TypeDeclaration.lf" "let i : i8 = 1;" "let i : i8 = 1;"
-  runTest "src/Test/Good/Types/i8TypeDeclaration.lf" "let i : i8 = 1;" "let i : i8 = 1;" {debug = True}
+  -- Test type declarations
+  runTest "src/Test/Good/Types/i8TypeDeclaration.lf" "let i : i8 = -1;" "let i : i8 = (-1);"
+  runTest "src/Test/Good/Types/i16TypeDeclaration.lf" "let i : i16 = -1;" "let i : i16 = (-1);"
+  runTest "src/Test/Good/Types/i32TypeDeclaration.lf" "let i : i32 = 1;" "let i : i32 = 1;"
+  runTest "src/Test/Good/Types/i64TypeDeclaration.lf" "let i : i64 = 1;" "let i : i64 = 1;"
+  runTest "src/Test/Good/Types/i128TypeDeclaration.lf" "let i : i128 = -1;" "let i : i128 = (-1);"
+  runTest "src/Test/Good/Types/u8TypeDeclaration.lf" "let u : u8 = 1;" "let u : u8 = 1;"
+  runTest "src/Test/Good/Types/u16TypeDeclaration.lf" "let u : u16 = 1;" "let u : u16 = 1;"
+  runTest "src/Test/Good/Types/u32TypeDeclaration.lf" "let u : u32 = 1;" "let u : u32 = 1;"
+  runTest "src/Test/Good/Types/u64TypeDeclaration.lf" "let u : u64 = 1;" "let u : u64 = 1;"
+  runTest "src/Test/Good/Types/u128TypeDeclaration.lf" "let u : u128 = 1;" "let u : u128 = 1;"
+  runTest "src/Test/Good/Types/f32TypeDeclaration.lf" "let d : f32 = 1.0;" "let d : f32 = 1.0;"
+  runTest "src/Test/Good/Types/f64TypeDeclaration.lf" "let d : f64 = -1.0;" "let d : f64 = (-1.0);"
+  runTest "src/Test/Good/Types/bitTypeDeclaration.lf" "let i : bit = 1;" "let i : bit = 1;"
+  runTest "src/Test/Good/Types/qubitTypeDeclaration.lf" "let q : qubit = qalloc();" "let q : qubit = qalloc();"
+  runTest "src/Test/Good/Types/boolTypeDeclaration.lf" "let b : bool = true;" "let b : bool = true;"
+  runTest "src/Test/Good/Types/angleTypeDeclaration.lf" "let theta : angle = 1.23;" "let theta : angle = 1.23;"
+  runTest "src/Test/Good/Types/unitTypeDeclaration.lf" "let unit : () = ();" "let unit : () = ();"
+  -- Test type declarations corner case
+  --runTest "src/Test/Good/Types/redundantSemicolumnsTypeDeclaration.lf" "let i : i32 = -99;" "let i : i32 = (-99);"
+  -- Test inferred types
+  runTest "src/Test/Good/Types/i32InferredType.lf" "let i = -7;" "let i = (-7);"
+  runTest "src/Test/Good/Types/f64InferredType.lf" "let f = -1000.0;" "let f = (-1000.0);"
+  runTest "src/Test/Good/Types/qubitInferredType.lf" "let q = qalloc();" "let q = qalloc();"
+  runTest "src/Test/Good/Types/unitInferredType.lf" "let () = ();" "let () = ();"
+
+  --runTest "src/Test/Good/Types/i8TypeDeclaration.lf" "let i : i8 = 1;" "let i : i8 = 1;" {debug = True}
