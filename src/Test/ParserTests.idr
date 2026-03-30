@@ -58,14 +58,16 @@ main = do
   runTest "src/Test/Good/Types/bitTypeDeclaration.lf" "let i : bit = 1;" "let i : bit = 1;"
   runTest "src/Test/Good/Types/qubitTypeDeclaration.lf" "let q : qubit = qalloc();" "let q : qubit = qalloc();"
   runTest "src/Test/Good/Types/boolTypeDeclaration.lf" "let b : bool = true;" "let b : bool = true;"
-  runTest "src/Test/Good/Types/angleTypeDeclaration.lf" "let theta : angle = 1.23;" "let theta : angle = 1.23;"
+  runTest "src/Test/Good/Types/angle32TypeDeclaration.lf" "let theta : angle32 = 1.2345;" "let theta : angle32 = 1.2345;"
+  runTest "src/Test/Good/Types/angle64TypeDeclaration.lf" "let theta : angle64 = 1.2345678912345;" "let theta : angle64 = 1.2345678912345;"
   runTest "src/Test/Good/Types/unitTypeDeclaration.lf" "let unit : () = ();" "let unit : () = ();"
-  -- Test type declarations corner case
-  --runTest "src/Test/Good/Types/redundantSemicolumnsTypeDeclaration.lf" "let i : i32 = -99;" "let i : i32 = (-99);"
+  --runTest "src/Test/Good/Types/paramTypeDeclaration.lf" "let theta : param = param(\"theta\");" "let theta : param = param(\"theta\");"
   -- Test inferred types
   runTest "src/Test/Good/Types/i32InferredType.lf" "let i = -7;" "let i = (-7);"
   runTest "src/Test/Good/Types/f64InferredType.lf" "let f = -1000.0;" "let f = (-1000.0);"
   runTest "src/Test/Good/Types/qubitInferredType.lf" "let q = qalloc();" "let q = qalloc();"
   runTest "src/Test/Good/Types/unitInferredType.lf" "let () = ();" "let () = ();"
+  -- Test type declarations corner case
+  --runTest "src/Test/Good/Types/redundantSemicolumnsTypeDeclaration.lf" "let i : i32 = -99;" "let i : i32 = (-99);"
 
   --runTest "src/Test/Good/Types/i8TypeDeclaration.lf" "let i : i8 = 1;" "let i : i8 = 1;" {debug = True}

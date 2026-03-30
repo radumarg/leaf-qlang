@@ -57,6 +57,7 @@ data BuiltinName
   | BuiltinMax
   | BuiltinMeasr
   | BuiltinMin
+  | BuiltinParam
   | BuiltinPow
   | BuiltinQAlloc
   | BuiltinReset
@@ -143,7 +144,8 @@ data Literal : Type where
 public export
 data TypPrimName
   = TypPrimUnit
-  | TypPrimAngle
+  | TypPrimAngle32
+  | TypPrimAngle64
   | TypPrimBit
   | TypPrimBool
   | TypPrimF32

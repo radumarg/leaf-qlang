@@ -18,8 +18,7 @@ modules = Main,
           Frontend.Parser,
           Frontend.Token,
           Serialize.OpenQASM3Serializer,
-          SampleCircuit,
-          Test.ParserTests
+          SampleCircuit
 
 main = Main
 executable = leaf

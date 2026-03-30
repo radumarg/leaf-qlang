@@ -1227,7 +1227,7 @@ mutual
                           Right ((), tokens5) =>
                             Right (EQMatch scrutineeExpr arms, tokens5)
 
-      -- Builtins (keywords): abs / adjoint / acos / asin / atan / ceil / cos / discard / exp / floor / ln / log10 / log2 / max / measr / min / pow / qalloc / reset / round / sin / sqrt / tan / uncompute
+      -- Builtins (keywords)
       Just (TokKw KwAbs) =>
         parseBuiltinCall fuelLeft BuiltinAbs tokens
 
@@ -1278,6 +1278,9 @@ mutual
 
       Just (TokKw KwMin) =>
         parseBuiltinCall fuelLeft BuiltinMin tokens
+
+      Just (TokKw KwParam) =>
+        parseBuiltinCall fuelLeft BuiltinParam tokens
 
       Just (TokKw KwPow) =>
         parseBuiltinCall fuelLeft BuiltinPow tokens
@@ -1472,6 +1475,7 @@ mutual
           BuiltinMax      => KwMax
           BuiltinMeasr   => KwMeasr
           BuiltinMin     => KwMin
+          BuiltinParam   => KwParam
           BuiltinPow     => KwPow
           BuiltinQAlloc  => KwQAlloc
           BuiltinReset   => KwReset

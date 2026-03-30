@@ -24,7 +24,7 @@ data Keyword
   | KwElse | KwExp | KwFalse | KwFloor | KwFn | KwFor | KwGeneral | KwIf | KwImport | KwIn
   | KwLet | KwLn | KwALin | KwLog10 | KwLog2 | KwLoop
   | KwMatch | KwMax | KwMeasr | KwMin | KwNegCtrl
-  | KwPow | KwRound | KwQAlloc | KwQelse | KwQif | KwQmatch | KwReset | KwReturn
+  | KwParam | KwPow | KwRound | KwQAlloc | KwQelse | KwQif | KwQmatch | KwReset | KwReturn
   | KwScratch | KwSin | KwSqrt | KwTan | KwTrue | KwUncompute | KwUnitary | KwWhile
 
 ----------------------------------------------------------------------
@@ -120,6 +120,7 @@ keywordFromString s =
     "measr"     => Just KwMeasr
     "min"       => Just KwMin
     "negctrl"   => Just KwNegCtrl
+    "param"     => Just KwParam
     "pow"       => Just KwPow
     "qalloc"    => Just KwQAlloc
     "qelse"     => Just KwQelse
@@ -142,23 +143,24 @@ public export
 typeFromString : String -> Maybe TypPrimName
 typeFromString s =
   case s of
-    "angle" => Just TypPrimAngle
-    "bit"   => Just TypPrimBit
-    "bool"  => Just TypPrimBool
-    "f32"  => Just TypPrimF32
-    "f64"  => Just TypPrimF64
-    "i8"   => Just TypPrimI8
-    "i16"  => Just TypPrimI16
-    "i32"  => Just TypPrimI32
-    "i64"  => Just TypPrimI64
-    "i128" => Just TypPrimI128
-    "u8"   => Just TypPrimU8
-    "u16"  => Just TypPrimU16
-    "u32"  => Just TypPrimU32
-    "u64"  => Just TypPrimU64
-    "u128" => Just TypPrimU128
-    "qubit" => Just TypPrimQubit
-    _       => Nothing
+    "angle32" => Just TypPrimAngle32
+    "angle64" => Just TypPrimAngle64
+    "bit"     => Just TypPrimBit
+    "bool"    => Just TypPrimBool
+    "f32"     => Just TypPrimF32
+    "f64"     => Just TypPrimF64
+    "i8"      => Just TypPrimI8
+    "i16"     => Just TypPrimI16
+    "i32"     => Just TypPrimI32
+    "i64"     => Just TypPrimI64
+    "i128"    => Just TypPrimI128
+    "u8"      => Just TypPrimU8
+    "u16"     => Just TypPrimU16
+    "u32"     => Just TypPrimU32
+    "u64"     => Just TypPrimU64
+    "u128"    => Just TypPrimU128
+    "qubit"   => Just TypPrimQubit
+    _         => Nothing
 
 public export
 gateFromString : String -> Maybe GateName
