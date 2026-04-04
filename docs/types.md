@@ -5,7 +5,7 @@
 bit, qubit
 
 // additional quantum types:
-angle32, angle64, Param
+angle32, angle64, param
 
 // signed integer types:  
 i8, i16, i32, i64, i128

@@ -1,0 +1,1 @@
+let bools:[bool;4]=[true,false,true,false];

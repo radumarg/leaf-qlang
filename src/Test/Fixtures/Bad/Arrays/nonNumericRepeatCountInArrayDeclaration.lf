@@ -1,0 +1,1 @@
+let flags: [bool; 3] = [true; count];

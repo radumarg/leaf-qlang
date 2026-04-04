@@ -13,6 +13,7 @@ modules = Frontend.AST,
           Frontend.ExprPrettyPrinter,
           Test.TestsHelper,
           Test.TypeParseTests,
+          Test.ArraysParseTests,
           Test.Run
 
 main = Test.Run

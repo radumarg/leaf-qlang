@@ -68,4 +68,46 @@ let () = ();
 ////////////////////////////////
 // Syntax for Parameters
 ////////////////////////////////
-let theta : Param = param("theta")
+let theta : param = Param("theta")
+
+
+////////////////////////////////
+// Syntax for declaring arrays
+////////////////////////////////
+
+let bs: [bool; 4] = [true, false, true, false];
+let is: [i32; 3] = [1, 2, 3];
+let us: [u64; 2] = [10, 20];
+let fs: [f64; 3] = [1.0, 2.0, 3.0];
+let bits: [bit; 3] = [1, 0, 1];
+let qubits: [qubit; 2] = qalloc(2);
+let angles: [angle64; 2] = [3.14, 1.57];
+let units: [(); 5] = [(), (), (), (), ()];
+let params: [param; 2] = [Param("theta"), Param("phi")];
+
+
+// // (30) Array access and length:
+
+// let a = [1, 2, 3];
+// let first = a[0];
+// let n = a.len();
+
+// // (31) Other quantum specific constructs:
+
+// let q: qubit = qalloc();
+// let qs: [qubit; 8] = qalloc(8); 
+
+// let b: bit = measr(q);
+// let bs: [bit; 8] = measr(qs);
+
+
+// // (42) Allocating quantum register, both notations should work: 
+
+// // dynamic length
+// let qs: [qubit] = qalloc(8);
+
+// // static length
+// let qs: [qubit; 8] = qalloc(8);
+
+// // static length alias
+// let qs: [qubit; 8] = qalloc(8);

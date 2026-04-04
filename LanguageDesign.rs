@@ -220,29 +220,7 @@ fn f() {
 
   let u: () = ();
   
-// (28) Declaring Arrays literal:
 
-let a = [1, 2, 3];
-let b: [i32; 4] = [10, 20, 30, 40];
-
-// (29) Arrays declared using a repeat syntax:
-
-let zeros = [0; 8];         // [0, 0, 0, 0, 0, 0, 0, 0]
-let flags = [true; 3];      // [true, true, true]
-
-// (30) Array access and length:
-
-let a = [1, 2, 3];
-let first = a[0];
-let n = a.len();
-
-// (31) Other quantum specific constructs:
-
-let q: qubit = qalloc();
-let qs: [qubit; 8] = qalloc(8); 
-
-let b: bit = measr(q);
-let bs: [bit; 8] = measr(qs);
 
 // Bitstrings: b"10110010" (See OpenQasm3 for reference)
 b"0101"
@@ -325,17 +303,6 @@ fn bell_pair() -> (bit, bit) {
   // q0, q1 still exist (collapsed); can reset/discard later if you want
   (b0, b1)
 }
-
-// (42) Allocating quantum register, both notations should work: 
-
-// dynamic length
-let qs: [qubit] = qalloc(8);
-
-// static length
-let qs: [qubit; 8] = qalloc(8);
-
-// static length alias
-let qs: [qubit; 8] = qalloc(8);
 
 // (43) import statements
 import "my_library.lf";
