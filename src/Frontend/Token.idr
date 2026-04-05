@@ -140,30 +140,6 @@ keywordFromString s =
     _           => Nothing
 
 public export
-typeFromString : String -> Maybe TypPrimName
-typeFromString s =
-  case s of
-    "angle32" => Just TypPrimAngle32
-    "angle64" => Just TypPrimAngle64
-    "bit"     => Just TypPrimBit
-    "bool"    => Just TypPrimBool
-    "f32"     => Just TypPrimF32
-    "f64"     => Just TypPrimF64
-    "i8"      => Just TypPrimI8
-    "i16"     => Just TypPrimI16
-    "i32"     => Just TypPrimI32
-    "i64"     => Just TypPrimI64
-    "i128"    => Just TypPrimI128
-    "param"   => Just TypPrimParam
-    "u8"      => Just TypPrimU8
-    "u16"     => Just TypPrimU16
-    "u32"     => Just TypPrimU32
-    "u64"     => Just TypPrimU64
-    "u128"    => Just TypPrimU128
-    "qubit"   => Just TypPrimQubit
-    _         => Nothing
-
-public export
 gateFromString : String -> Maybe GateName
 gateFromString s =
   case s of
@@ -211,9 +187,145 @@ gateFromString s =
     "MS"    => Just GateMS
     _       => Nothing
 
+public export
+typeFromString : String -> Maybe TypPrimName
+typeFromString s =
+  case s of
+    "angle32" => Just TypPrimAngle32
+    "angle64" => Just TypPrimAngle64
+    "bit"     => Just TypPrimBit
+    "bool"    => Just TypPrimBool
+    "f32"     => Just TypPrimF32
+    "f64"     => Just TypPrimF64
+    "i8"      => Just TypPrimI8
+    "i16"     => Just TypPrimI16
+    "i32"     => Just TypPrimI32
+    "i64"     => Just TypPrimI64
+    "i128"    => Just TypPrimI128
+    "param"   => Just TypPrimParam
+    "u8"      => Just TypPrimU8
+    "u16"     => Just TypPrimU16
+    "u32"     => Just TypPrimU32
+    "u64"     => Just TypPrimU64
+    "u128"    => Just TypPrimU128
+    "qubit"   => Just TypPrimQubit
+    _         => Nothing
+
 ----------------------------------------------------------------------
--- Derivations for debugging/testing
+-- Implementation and Derivations for debugging/testing
 ----------------------------------------------------------------------
-%runElab derive "Keyword" [Show, Eq]
-%runElab derive "Symbol" [Show, Eq]
+
+public export
+showKeywordLeaf : Keyword -> String
+showKeywordLeaf kw =
+  case kw of
+    KwAbs       => "abs"
+    KwAdjoint   => "adjoint"
+    KwAffin     => "affin"
+    KwAs        => "as"
+    KwAcos      => "acos"
+    KwAsin      => "asin"
+    KwAtan      => "atan"
+    KwBarrier   => "barrier"
+    KwBreak     => "break"
+    KwCeil      => "ceil"
+    KwClassical => "classical"
+    KwCos       => "cos"
+    KwCtrl      => "ctrl"
+    KwContinue  => "continue"
+    KwDiscard   => "discard"
+    KwElse      => "else"
+    KwExp       => "exp"
+    KwFalse     => "false"
+    KwFloor     => "floor"
+    KwFn        => "fn"
+    KwFor       => "for"
+    KwGeneral   => "general"
+    KwIf        => "if"
+    KwImport    => "import"
+    KwIn        => "in"
+    KwLet       => "let"
+    KwLn        => "ln"
+    KwALin      => "lin"
+    KwLog10     => "log10"
+    KwLog2      => "log2"
+    KwLoop      => "loop"
+    KwMatch     => "match"
+    KwMax       => "max"
+    KwMeasr     => "measr"
+    KwMin       => "min"
+    KwNegCtrl   => "negctrl"
+    KwParam     => "Param"
+    KwPow       => "pow"
+    KwRound     => "round"
+    KwQAlloc    => "qalloc"
+    KwQelse     => "qelse"
+    KwQif       => "qif"
+    KwQmatch    => "qmatch"
+    KwReset     => "reset"
+    KwReturn    => "return"
+    KwScratch   => "scratch"
+    KwSin       => "sin"
+    KwSqrt      => "sqrt"
+    KwTan       => "tan"
+    KwTrue      => "true"
+    KwUncompute => "uncompute"
+    KwUnitary   => "unitary"
+    KwWhile     => "while"
+
+public export
+showSymbolLeaf : Symbol -> String
+showSymbolLeaf sym =
+  case sym of
+    SymQuestion    => "?"
+    SymAmp         => "&"
+    SymLParen      => "("
+    SymRParen      => ")"
+    SymLBracket    => "["
+    SymRBracket    => "]"
+    SymLBrace      => "{"
+    SymRBrace      => "}"
+    SymComma       => ","
+    SymSemi        => ";"
+    SymColon       => ":"
+    SymDot         => "."
+    SymBang        => "!"
+    SymEq          => "="
+    SymPlus        => "+"
+    SymMinus       => "-"
+    SymStar        => "*"
+    SymSlash       => "/"
+    SymPercent     => "%"
+    SymPlusEq      => "+="
+    SymMinusEq     => "-="
+    SymStarEq      => "*="
+    SymSlashEq     => "/="
+    SymPercentEq   => "%="
+    SymWalrusEq    => ":="
+    SymGt          => ">"
+    SymGe          => ">="
+    SymLt          => "<"
+    SymLe          => "<="
+    SymEqEq        => "=="
+    SymNotEq       => "!="
+    SymAndAnd      => "&&"
+    SymOrOr        => "||"
+    SymDotDot      => ".."
+    SymDotDotEq    => "..="
+    SymDoubleColon => "::"
+    SymPipe        => "|"
+    SymCaret       => "^"
+    SymArrow       => "->"
+    SymFatArrow    => "=>"
+
+public export
+implementation Show Keyword where
+  show = showKeywordLeaf
+
+public export
+implementation Show Symbol where
+  show = showSymbolLeaf
+
+%runElab derive "Keyword" [Eq]
+%runElab derive "Symbol" [Eq]
 %runElab derive "Token" [Show, Eq]
