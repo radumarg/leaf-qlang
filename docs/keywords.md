@@ -1,0 +1,5 @@
+# Leaf Keywords
+
+```rust
+adjoint, affin, as, barrier, break, classical, ctrl, continue, discard, else, false, fn, for, general, if, import, in, let, lin, loop, measr, negctrl, pow, qalloc, qif, qelse, qmatch, reset, return, scratch, true, unitary, uncompute, while
+```
