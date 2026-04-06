@@ -1,6 +1,6 @@
 # Leaf Keywords
 
-```rust
+```leaf
 adjoint
 affin
 as

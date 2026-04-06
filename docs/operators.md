@@ -1,6 +1,6 @@
 # Leaf Operators
 
-```rust
+```leaf
 '('
 ')'
 '()'

@@ -2,13 +2,13 @@
 
 ## Identity
 
-```rust
+```leaf
 Id
 ```
 
 ## Single-Qubit Gates
 
-```rust
+```leaf
 X
 Y
 Z
@@ -23,7 +23,7 @@ TDG
 
 ## Parametric Single-Qubit Gates
 
-```rust
+```leaf
 RX
 RY
 RZ
@@ -34,7 +34,7 @@ U3
 
 ## Controlled Gates
 
-```rust
+```leaf
 CNOT
 CY
 CZ
@@ -54,7 +54,7 @@ CU3
 
 ## Two-Qubit Interaction Gates
 
-```rust
+```leaf
 SWAP
 RXX
 RYY
@@ -63,14 +63,14 @@ RZZ
 
 ## Three-Qubit Gates
 
-```rust
+```leaf
 CCX
 CSWAP
 ```
 
 ## Ion-Native Gates
 
-```rust
+```leaf
 GPI
 GPI2
 MS

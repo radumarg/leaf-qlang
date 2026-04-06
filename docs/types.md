@@ -1,6 +1,6 @@
 # Leaf basic types
 
-```rust
+```leaf
 // quantum computing specific:
 bit, qubit
 
