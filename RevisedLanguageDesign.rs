@@ -75,6 +75,7 @@ let theta : param = Param("theta")
 // Syntax for declaring arrays
 ////////////////////////////////
 
+// explicit type annotations arrays
 let bs: [bool; 4] = [true, false, true, false];
 let is: [i32; 3] = [1, 2, 3];
 let us: [u64; 2] = [10, 20];
@@ -85,6 +86,12 @@ let angles: [angle64; 2] = [3.14, 1.57];
 let units: [(); 5] = [(), (), (), (), ()];
 let params: [param; 2] = [Param("theta"), Param("phi")];
 
+// inferred types for arrays
+let bools = [true, false, true, false];
+let ints = [1, 2, 3];
+let zeros = [0; 3];
+let fs = [1.0, 2.0, 3.0];
+let units = [(), (), ()];
 
 // // (30) Array access and length:
 
@@ -95,22 +102,20 @@ let params: [param; 2] = [Param("theta"), Param("phi")];
 // Bitstrings: b"10110010" (See OpenQasm3 for reference)
 //b"0101"
 
-// // (31) Other quantum specific constructs:
+////////////////////////////////
+// Syntax for allocating qubits
+// and working with bits
+////////////////////////////////
 
-// let q: qubit = qalloc();
-// let qs: [qubit; 8] = qalloc(8); 
+// explicit type annotations for qubits and bits
+let q : qubit = qalloc();
+let q : qubit = qalloc(1);
+let qs : [qubit; 3] = qalloc(3);
+let b : bit = measr(q);
+let b : bit = 0;
+let bs : [bit; 3] = measr(qs);
 
-// let b: bit = measr(q);
-// let bs: [bit; 8] = measr(qs);
-
-
-// // (42) Allocating quantum register, both notations should work: 
-
-// // dynamic length
-// let qs: [qubit] = qalloc(8);
-
-// // static length
-// let qs: [qubit; 8] = qalloc(8);
-
-// // static length alias
-// let qs: [qubit; 8] = qalloc(8);
+// inferred types for qubits and bits
+let q = qalloc();
+let qs = qalloc(3);
+let b = measr(q);

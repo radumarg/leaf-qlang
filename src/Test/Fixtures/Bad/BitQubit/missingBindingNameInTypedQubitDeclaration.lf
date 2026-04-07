@@ -1,0 +1,1 @@
+let : qubit = qalloc(1);

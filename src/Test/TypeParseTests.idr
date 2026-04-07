@@ -123,5 +123,51 @@ runTypeParseTest = do
                   "src/Test/Fixtures/Bad/Types/unexpectedCommaSeparatedQallocInInitializer.lf"
   runParseShouldFailTest
                   "src/Test/Fixtures/Bad/Types/unexpectedCommaSeparatedBoolInitializer.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/missingBindingNameInTypedI32Declaration.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/missingEqualsInTypedI32Declaration.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/unexpectedSecondIntegerInTypedI32Declaration.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/unexpectedCommaSeparatedIntegerInTypedI32Declaration.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/doubleColonWithSpacesInTypeDeclaration.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/missingClosingParenInTypedI32Declaration.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/unexpectedClosingParenInTypedI32Declaration.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/unexpectedSecondBoolLiteralInTypedDeclaration.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/unexpectedLeadingCommaInTypedBoolDeclaration.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/unexpectedSecondQallocInTypedQubitDeclaration.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/unexpectedTrailingCommaAfterQallocInTypedQubitDeclaration.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/missingClosingParenInTypedParamDeclaration.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/missingArgumentInTypedParamDeclaration.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/unexpectedTrailingCommaInTypedParamDeclaration.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/unexpectedExtraClosingParenInTypedUnitDeclaration.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/missingInitializerInTypedUnitDeclaration.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/missingInitializerInInferredDeclaration.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/missingBindingNameInInferredDeclaration.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/unexpectedSecondQallocInInferredDeclaration.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/unexpectedSecondBoolLiteralInInferredDeclaration.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/unexpectedSecondParamInInferredDeclaration.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/unexpectedSecondUnitLiteralInInferredDeclaration.lf"
+  runParseShouldFailTest
+                  "src/Test/Fixtures/Bad/Types/unexpectedLeadingCommaInInferredDeclaration.lf"
 
   --runParseOkTest "src/Test/Fixtures/Good/Types/i8TypeDeclaration.lf" "let i : i8 = 1;" "let i : i8 = 1;" {debug = True}

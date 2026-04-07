@@ -143,3 +143,21 @@ runArraysParseTest = do
                     "src/Test/Fixtures/Bad/Arrays/malformedUnitArrayDeclaration.lf"
     runParseShouldFailTest
                     "src/Test/Fixtures/Bad/Arrays/unexpectedFloatAfterInferredArrayInitializer.lf"
+    runParseShouldFailTest
+                    "src/Test/Fixtures/Bad/Arrays/missingClosingBracketAfterArrayLiteral.lf"
+    runParseShouldFailTest
+                    "src/Test/Fixtures/Bad/Arrays/missingMiddleElementInArrayLiteral.lf"
+    runParseShouldFailTest
+                    "src/Test/Fixtures/Bad/Arrays/missingCommaBetweenFirstTwoArrayElements.lf"
+    runParseShouldFailTest
+                    "src/Test/Fixtures/Bad/Arrays/missingRepeatedValueBeforeSemicolon.lf"
+    runParseShouldFailTest
+                    "src/Test/Fixtures/Bad/Arrays/unexpectedLiteralAfterRepeatCount.lf"
+    runParseShouldFailTest
+                    "src/Test/Fixtures/Bad/Arrays/missingSemicolonInArrayTypeDeclaration.lf"
+    runParseShouldFailTest
+                    "src/Test/Fixtures/Bad/Arrays/unexpectedLiteralAfterEmptyArrayInitializer.lf"
+    runParseShouldFailTest
+                    "src/Test/Fixtures/Bad/Arrays/unexpectedLiteralAfterMeasrBitArrayInitializer.lf"
+    runParseShouldFailTest
+                    "src/Test/Fixtures/Bad/Arrays/unexpectedTrailingCommaAfterQallocInitializer.lf"
