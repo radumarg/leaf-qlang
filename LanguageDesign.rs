@@ -1,4 +1,24 @@
-// Scratch, etc. classic/unitary/?
+// classical/unitary/general
+
+// // At IR level:
+//   data Effect
+//     = Classical
+//     | Unitary
+//     | MayMeasure
+
+//   join : Effect -> Effect -> Effect
+//   join Classical   e            = e
+//   join e           Classical    = e
+//   join Unitary     Unitary      = Unitary
+//   join Unitary     MayMeasure   = MayMeasure
+//   join MayMeasure  Unitary      = MayMeasure
+//   join MayMeasure  MayMeasure   = MayMeasure
+
+//   Prog : Effect -> Type
+
+//   compose : Prog e1 -> Prog e2 -> Prog (join e1 e2)
+//   // Subtyping in an effect lattice: Classical < Unitary < MayMeasure
+//   //You could even prove: Classical implies Unitary
 
 // Ad support for let in expressions plus tests
 
@@ -7,10 +27,6 @@
 
 // (3) Operators Reserved Symbols and Keywords: 
   '?', '&', '(', ')', ',', ';', '=', '+', '-', '*', '/', '%', '+=', '-=', '*=', '/=', '%=', '>', '>=', '<', '<=', '..', '()', ':', '[', ']', '{', '}', '==', '!=', '&&', '||', '!', '.', '..=', '::', '|', '^', '->', ':='
-
-// (4) Quantum Gates Reserved Keywords: 
-  Id, X, Y, Z, H, S, SDG, T, TDG, SX, SXDG, RX, RY, RZ, U1, U2, U3, CNOT, CY, CZ, CS, CSDG, CT, CTDG, CSX, CSXDG, CRX, CRY, CRZ, CU1, CU2, CU3, SWAP, RXX, RYY, RZZ, CCX, CSWAP, GPI, GPI2, MS
-
 
 // (5) Apply simple quantum gates on some qubits:
 
@@ -154,27 +170,6 @@ ctrl(q0, q1) {
   general fn sample(q: qubit) -> bit {
     measure(q)
   }
-
-  
-// // At IR level:
-//   data Effect
-//     = Classical
-//     | Unitary
-//     | MayMeasure
-
-//   join : Effect -> Effect -> Effect
-//   join Classical   e            = e
-//   join e           Classical    = e
-//   join Unitary     Unitary      = Unitary
-//   join Unitary     MayMeasure   = MayMeasure
-//   join MayMeasure  Unitary      = MayMeasure
-//   join MayMeasure  MayMeasure   = MayMeasure
-
-//   Prog : Effect -> Type
-
-//   compose : Prog e1 -> Prog e2 -> Prog (join e1 e2)
-//   // Subtyping in an effect lattice: Classical < Unitary < MayMeasure
-//   //You could even prove: Classical implies Unitary
 
 
 // (20) Variable declared in the scope of a function:
@@ -362,24 +357,6 @@ let scratch qs = qalloc(8);
     let q = H(q);
     measure(q)
   }
-
-// (52) Declaring a qubits as linear, meaning they must be used exactly once, no copying or discarding allowed. Default is linear, so the 'lin' keyword is optional.  
-
-  let lin q: qubit = qalloc();
-
-  let lin qs = qalloc(8);
-
-// (53) Declaring qubits as affine, meaning they can be used at most once, no copying allowed, but discarding is allowed.
-
-  let affin q: qubit = qalloc();
-
-  let affin qs = qalloc(8);
-
-// (54) Declaring bit strings
-
-let bs = b"10110010";
-let bs: [bit; 8] = b"10110010";
-let bs: [bit; 8] = [0, 1, 1, 0, 0, 1, 0, 0];
 
 // (55) quantum conditional statements:
 

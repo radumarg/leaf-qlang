@@ -35,7 +35,7 @@ U3
 ## Controlled Gates
 
 ```leaf
-CNOT
+CX/CNOT
 CY
 CZ
 CS

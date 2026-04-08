@@ -3,8 +3,8 @@ module Test.BitQubitParseTests
 import Test.TestHelper
 
 export
-runBitQubitParseTest : IO ()
-runBitQubitParseTest = do
+runBitQubitParseTests : IO ()
+runBitQubitParseTests = do
 
     -- Test bit/qubit type declarations
     runParseOkTest "src/Test/Fixtures/Good/BitQubit/qubitDeclaration1.lf" 

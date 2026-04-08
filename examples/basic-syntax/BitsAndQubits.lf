@@ -1,3 +1,4 @@
+
 // explicit type annotations for qubits and bits
 
 let q : qubit = qalloc();

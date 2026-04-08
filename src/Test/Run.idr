@@ -1,13 +1,15 @@
 module Test.Run
 
-import Test.TypeParseTests
 import Test.ArraysParseTests
 import Test.BitQubitParseTests
+import Test.QuantumGatesParserTests
+import Test.TypeParseTests
 
 
 main : IO ()
 main = do
-  runTypeParseTest
-  runArraysParseTest
-  runBitQubitParseTest
+  runArraysParseTests
+  runBitQubitParseTests
+  runQuantumGatesParseTests
+  runTypeParseTests
   putStrLn "All tests completed."

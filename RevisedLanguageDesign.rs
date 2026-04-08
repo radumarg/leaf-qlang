@@ -6,6 +6,12 @@
 
 // Paranthesis, square brakets and curly braces follow the same rules from Rust.
 
+/////////////////////////////////////
+// Quantum Gates Reserved Keywords:
+/////////////////////////////////////
+
+Id, X, Y, Z, H, S, SDG, T, TDG, SX, SXDG, RX, RY, RZ, U1, U2, U3, CNOT, CX, CY, CZ, CS, CSDG, CT, CTDG, CSX, CSXDG, CRX, CRY, CRZ, CU1, CU2, CU3, SWAP, RXX, RYY, RZZ, CCX, CSWAP, GPI, GPI2, MS
+
 ///////////////////////////////////
 // Reserved Keywords for Types:
 ///////////////////////////////////
@@ -99,9 +105,6 @@ let units = [(), (), ()];
 // let first = a[0];
 // let n = a.len();
 
-// Bitstrings: b"10110010" (See OpenQasm3 for reference)
-//b"0101"
-
 ////////////////////////////////
 // Syntax for allocating qubits
 // and working with bits
@@ -119,3 +122,27 @@ let bs : [bit; 3] = measr(qs);
 let q = qalloc();
 let qs = qalloc(3);
 let b = measr(q);
+
+
+// // (52) Declaring a qubits as linear, meaning they must be used exactly once, no copying or discarding allowed. Default is linear, so the 'lin' keyword is optional.  
+
+//   let lin q: qubit = qalloc();
+
+//   let lin qs = qalloc(8);
+
+// // (53) Declaring qubits as affine, meaning they can be used at most once, no copying allowed, but discarding is allowed.
+
+//   let affin q: qubit = qalloc();
+
+//   let affin qs = qalloc(8);
+
+// // Scratch, etc. classic/unitary/?
+
+// // (54) Declaring bit strings
+
+// let bs = b"10110010";
+// let bs: [bit; 8] = b"10110010";
+// let bs: [bit; 8] = [0, 1, 1, 0, 0, 1, 0, 0];
+
+// Bitstrings: b"10110010" (See OpenQasm3 for reference)
+//b"0101"

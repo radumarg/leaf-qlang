@@ -3,8 +3,8 @@ module Test.TypeParseTests
 import Test.TestHelper
 
 export
-runTypeParseTest : IO ()
-runTypeParseTest = do
+runTypeParseTests : IO ()
+runTypeParseTests = do
 
   -- Test type declarations
   runParseOkTest "src/Test/Fixtures/Good/Types/i8TypeDeclaration.lf"

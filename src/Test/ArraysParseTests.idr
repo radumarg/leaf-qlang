@@ -3,8 +3,8 @@ module Test.ArraysParseTests
 import Test.TestHelper
 
 export
-runArraysParseTest : IO ()
-runArraysParseTest = do
+runArraysParseTests : IO ()
+runArraysParseTests = do
 
     -- Test array type declarations
     runParseOkTest "src/Test/Fixtures/Good/Arrays/boolArrayDeclaration.lf" 
