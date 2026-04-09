@@ -1,0 +1,1 @@
+let linear scratch qs: [qubit; ] = qalloc(2);

@@ -4,7 +4,7 @@
 */
 
 // linear qubits: must be used exactly once, no copying or discarding allowed
-// this is the default, so the 'lin' keyword is optional 
+// this is the default, so the 'linear' keyword is optional
 let linear q: qubit = qalloc();
 let linear qs: [qubit; 2] = qalloc(2);
 

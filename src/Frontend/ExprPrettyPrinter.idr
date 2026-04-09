@@ -97,16 +97,36 @@ mutual
   showTypExprList (t :: ts) = showTypExprLeaf t :: showTypExprList ts
 
 mutual
+  showPatternQualifierLeaf : PatternQualifier -> String
+  showPatternQualifierLeaf PatQualScratch = "scratch"
+  showPatternQualifierLeaf PatQualLinear = "linear"
+  showPatternQualifierLeaf PatQualAffine = "affine"
+
+  showPatternQualifierList : List PatternQualifier -> List String
+  showPatternQualifierList [] = []
+  showPatternQualifierList (qualifier :: qualifiers) =
+    showPatternQualifierLeaf qualifier :: showPatternQualifierList qualifiers
+
   showPatternLeaf : Pattern -> String
   showPatternLeaf PatWildcard = "_"
   showPatternLeaf (PatVarName x) = x
   showPatternLeaf (PatLit lit) = showLiteralLeaf lit
   showPatternLeaf PatUnit = "()"
+  showPatternLeaf (PatQualified qualifiers pat) =
+    let qualifierPrefix = joinWith " " (showPatternQualifierList qualifiers) in
+      if qualifierPrefix == ""
+         then showPatternLeaf pat
+         else qualifierPrefix ++ " " ++ showPatternLeaf pat
   showPatternLeaf (PatTuple ps) = showTupleLike (showPatternList ps)
 
   showPatternList : List Pattern -> List String
   showPatternList [] = []
   showPatternList (p :: ps) = showPatternLeaf p :: showPatternList ps
+
+showTypedBindingPatternLeaf : Pattern -> String
+showTypedBindingPatternLeaf (PatQualified qualifiers pat) =
+  showPatternLeaf (PatQualified qualifiers pat)
+showTypedBindingPatternLeaf pat = showPatternLeaf pat ++ " "
 
 showBuiltinNameLeaf : BuiltinName -> String
 showBuiltinNameLeaf BuiltinAbs       = "abs"
@@ -424,7 +444,7 @@ mutual
   showStmtWithFuel (S fuel) style (StmtLet pat Nothing val) =
     "let " ++ showPatternLeaf pat ++ " = " ++ showExprWithFuel fuel style val ++ ";"
   showStmtWithFuel (S fuel) style (StmtLet pat (Just ty) val) =
-    "let " ++ showPatternLeaf pat ++ " : " ++ showTypExprLeaf ty ++
+    "let " ++ showTypedBindingPatternLeaf pat ++ ": " ++ showTypExprLeaf ty ++
     " = " ++ showExprWithFuel fuel style val ++ ";"
   showStmtWithFuel (S fuel) style (StmtAssign lhs op rhs) =
     showExprWithFuel fuel style lhs ++ " " ++ showAssignOpLeaf op ++ " " ++

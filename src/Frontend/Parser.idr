@@ -371,90 +371,144 @@ parseLiteral tokens =
 --------------------------------------------------------------------------------
 -- PATTERN PARSING (let bindings + match arms)
 --------------------------------------------------------------------------------
-parsePatternFuel : Nat -> Parser Pattern
-parsePatternFuel Z tokens =
-  -- If you have a better error constructor, use it; this keeps things simple.
-  failAtHead (ParseExpected "pattern (out of fuel)") tokens
+buildPatternQualifiers : Bool -> Maybe PatternQualifier -> List PatternQualifier
+buildPatternQualifiers hasScratch maybeQualifier =
+  case hasScratch of
+    True =>
+      case maybeQualifier of
+        Nothing => [PatQualScratch]
+        Just qualifier => [PatQualScratch, qualifier]
+    False =>
+      case maybeQualifier of
+        Nothing => []
+        Just qualifier => [qualifier]
 
-parsePatternFuel (S fuel) tokens =
+parsePatternQualifiersAcc : List PatternQualifier -> Bool -> Maybe PatternQualifier -> Parser (List PatternQualifier)
+parsePatternQualifiersAcc qualifiers hasScratch maybeLinearity tokens =
   case tokens of
-    -- Wildcard: _
-    (B TokUnderscore _ :: rest) =>
-      Right (PatWildcard, rest)
+    (B (TokKw KwScratch) _ :: rest) =>
+      case hasScratch of
+        True => Right (qualifiers, tokens)
+        False => parsePatternQualifiersAcc (qualifiers ++ [PatQualScratch]) True maybeLinearity rest
 
-    -- Variable: x
-    (B (TokIdent name) _ :: rest) =>
-      Right (PatVarName name, rest)
+    (B (TokKw KwLinear) _ :: rest) =>
+      case maybeLinearity of
+        Nothing => parsePatternQualifiersAcc (qualifiers ++ [PatQualLinear]) hasScratch (Just PatQualLinear) rest
+        Just _ => Right (qualifiers, tokens)
 
-    -- Literal patterns
-    (B (TokIntLitRaw _) _ :: _) =>
-      case parseLiteral tokens of
-        Left err => Left err
-        Right (lit, rest) => Right (PatLit lit, rest)
+    (B (TokKw KwAffine) _ :: rest) =>
+      case maybeLinearity of
+        Nothing => parsePatternQualifiersAcc (qualifiers ++ [PatQualAffine]) hasScratch (Just PatQualAffine) rest
+        Just _ => Right (qualifiers, tokens)
 
-    (B (TokFloatLitRaw _) _ :: _) =>
-      case parseLiteral tokens of
-        Left err => Left err
-        Right (lit, rest) => Right (PatLit lit, rest)
+    _ => Right (qualifiers, tokens)
 
-    (B (TokStringLit _) _ :: _) =>
-      case parseLiteral tokens of
-        Left err => Left err
-        Right (lit, rest) => Right (PatLit lit, rest)
+parsePatternQualifiers : Parser (List PatternQualifier)
+parsePatternQualifiers tokens0 =
+  parsePatternQualifiersAcc [] False Nothing tokens0
 
-    (B (TokBitStringLit _) _ :: _) =>
-      case parseLiteral tokens of
-        Left err => Left err
-        Right (lit, rest) => Right (PatLit lit, rest)
+mutual
+  parsePatternFuel : Nat -> Parser Pattern
+  parsePatternFuel Z tokens =
+    -- If you have a better error constructor, use it; this keeps things simple.
+    failAtHead (ParseExpected "pattern (out of fuel)") tokens
 
-    (B (TokKw KwTrue) _ :: _) =>
-      case parseLiteral tokens of
-        Left err => Left err
-        Right (lit, rest) => Right (PatLit lit, rest)
+  parsePatternFuel (S fuel) tokens =
+    case peekToken tokens of
+      Just (TokKw KwScratch) => parseQualifiedPatternFuel fuel tokens
+      Just (TokKw KwLinear) => parseQualifiedPatternFuel fuel tokens
+      Just (TokKw KwAffine) => parseQualifiedPatternFuel fuel tokens
+      _ => parseBasePatternFuel fuel tokens
 
-    (B (TokKw KwFalse) _ :: _) =>
-      case parseLiteral tokens of
-        Left err => Left err
-        Right (lit, rest) => Right (PatLit lit, rest)
+  parseQualifiedPatternFuel : Nat -> Parser Pattern
+  parseQualifiedPatternFuel fuelLeft tokens0 =
+    case parsePatternQualifiers tokens0 of
+      Left err => Left err
+      Right (qualifiers, tokens1) =>
+        case parseBasePatternFuel fuelLeft tokens1 of
+          Left err => Left err
+          Right (pattern, tokens2) => Right (PatQualified qualifiers pattern, tokens2)
 
-    -- Tuple pattern or unit: (...) / ()
-    (B (TokSym SymLParen) _ :: _) =>
-      case expectSymbol SymLParen tokens of
-        Left err => Left err
-        Right ((), tokens1) =>
-          case peekToken tokens1 of
-            Just (TokSym SymRParen) =>
-              case expectSymbol SymRParen tokens1 of
-                Left err => Left err
-                Right ((), tokens2) => Right (PatUnit, tokens2)
+  parseBasePatternFuel : Nat -> Parser Pattern
+  parseBasePatternFuel fuelLeft tokensBase =
+    case tokensBase of
+      -- Wildcard: _
+      (B TokUnderscore _ :: rest) =>
+        Right (PatWildcard, rest)
 
-            _ =>
-              case parsePatternFuel fuel tokens1 of
-                Left err => Left err
-                Right (firstPat, tokens2) =>
-                  case peekToken tokens2 of
-                    Just (TokSym SymComma) =>
-                      case expectSymbol SymComma tokens2 of
-                        Left err => Left err
-                        Right ((), tokens3) =>
-                          -- Fuel for the comma-separated tail list.
-                          let commaFuel : Nat = 2 * length tokens3 + 16 in
-                          case parseCommaSep0Until commaFuel SymRParen (parsePatternFuel fuel) tokens3 of
-                            Left err => Left err
-                            Right (morePats, tokens4) =>
-                              case expectSymbol SymRParen tokens4 of
-                                Left err => Left err
-                                Right ((), tokens5) =>
-                                  Right (PatTuple (firstPat :: morePats), tokens5)
+      -- Variable: x
+      (B (TokIdent name) _ :: rest) =>
+        Right (PatVarName name, rest)
 
-                    _ =>
-                      -- Grouping parentheses for patterns: (x) -> x
-                      case expectSymbol SymRParen tokens2 of
-                        Left err => Left err
-                        Right ((), tokens3) => Right (firstPat, tokens3)
+      -- Literal patterns
+      (B (TokIntLitRaw _) _ :: _) =>
+        case parseLiteral tokensBase of
+          Left err => Left err
+          Right (lit, rest) => Right (PatLit lit, rest)
 
-    _ =>
-      failAtHead (ParseExpected "pattern") tokens
+      (B (TokFloatLitRaw _) _ :: _) =>
+        case parseLiteral tokensBase of
+          Left err => Left err
+          Right (lit, rest) => Right (PatLit lit, rest)
+
+      (B (TokStringLit _) _ :: _) =>
+        case parseLiteral tokensBase of
+          Left err => Left err
+          Right (lit, rest) => Right (PatLit lit, rest)
+
+      (B (TokBitStringLit _) _ :: _) =>
+        case parseLiteral tokensBase of
+          Left err => Left err
+          Right (lit, rest) => Right (PatLit lit, rest)
+
+      (B (TokKw KwTrue) _ :: _) =>
+        case parseLiteral tokensBase of
+          Left err => Left err
+          Right (lit, rest) => Right (PatLit lit, rest)
+
+      (B (TokKw KwFalse) _ :: _) =>
+        case parseLiteral tokensBase of
+          Left err => Left err
+          Right (lit, rest) => Right (PatLit lit, rest)
+
+      -- Tuple pattern or unit: (...) / ()
+      (B (TokSym SymLParen) _ :: _) =>
+        case expectSymbol SymLParen tokensBase of
+          Left err => Left err
+          Right ((), tokens1) =>
+            case peekToken tokens1 of
+              Just (TokSym SymRParen) =>
+                case expectSymbol SymRParen tokens1 of
+                  Left err => Left err
+                  Right ((), tokens2) => Right (PatUnit, tokens2)
+
+              _ =>
+                case parsePatternFuel fuelLeft tokens1 of
+                  Left err => Left err
+                  Right (firstPat, tokens2) =>
+                    case peekToken tokens2 of
+                      Just (TokSym SymComma) =>
+                        case expectSymbol SymComma tokens2 of
+                          Left err => Left err
+                          Right ((), tokens3) =>
+                            -- Fuel for the comma-separated tail list.
+                            let commaFuel : Nat = 2 * length tokens3 + 16 in
+                            case parseCommaSep0Until commaFuel SymRParen (parsePatternFuel fuelLeft) tokens3 of
+                              Left err => Left err
+                              Right (morePats, tokens4) =>
+                                case expectSymbol SymRParen tokens4 of
+                                  Left err => Left err
+                                  Right ((), tokens5) =>
+                                    Right (PatTuple (firstPat :: morePats), tokens5)
+
+                      _ =>
+                        -- Grouping parentheses for patterns: (x) -> x
+                        case expectSymbol SymRParen tokens2 of
+                          Left err => Left err
+                          Right ((), tokens3) => Right (firstPat, tokens3)
+
+      _ =>
+        failAtHead (ParseExpected "pattern") tokensBase
 
 parsePattern : Parser Pattern
 parsePattern tokens =

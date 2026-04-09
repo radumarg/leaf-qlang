@@ -197,16 +197,24 @@ data TypExpr : Type where
 ------------------------------------------------------------------------------
 -- Pattern: used in let bindings and match arms.
 --   let x = ...
+--   let scratch linear q = ...
 --   let (a, b, _) = ...
 --   match day { 1 => ..., _ => ... }
 ------------------------------------------------------------------------------
 public export
+data PatternQualifier : Type where
+  PatQualScratch : PatternQualifier
+  PatQualLinear  : PatternQualifier
+  PatQualAffine  : PatternQualifier
+
+public export
 data Pattern : Type where
-  PatWildcard : Pattern                 -- _
-  PatVarName  : String -> Pattern       -- x
-  PatLit      : Literal -> Pattern      -- 1, true, "hi"
-  PatUnit     : Pattern                 -- ()
-  PatTuple    : List Pattern -> Pattern -- (a,b,_)
+  PatWildcard  : Pattern                                       -- _
+  PatVarName   : String -> Pattern                             -- x
+  PatLit       : Literal -> Pattern                            -- 1, true, "hi"
+  PatUnit      : Pattern                                       -- ()
+  PatQualified : List PatternQualifier -> Pattern -> Pattern  -- scratch linear q
+  PatTuple     : List Pattern -> Pattern                       -- (a,b,_)
 
 ------------------------------------------------------------------------------
 -- Control prefix syntax for quantum controls:
@@ -433,6 +441,7 @@ record Program where
 %runElab derive "TypPrimName" [Show, Eq]
 %runElab derive "SizeExpr" [Show, Eq]
 %runElab derive "TypExpr" [Show, Eq]
+%runElab derive "PatternQualifier" [Show, Eq]
 %runElab derive "Pattern" [Show, Eq]
 %runElab derive "ControlNamedArg" [Show, Eq]
 %runElab derive "QMatchLabel" [Show, Eq]

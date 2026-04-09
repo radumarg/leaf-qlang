@@ -12,6 +12,16 @@
 
 Id, X, Y, Z, H, S, SDG, T, TDG, SX, SXDG, RX, RY, RZ, U1, U2, U3, CNOT, CX, CY, CZ, CS, CSDG, CT, CTDG, CSX, CSXDG, CRX, CRY, CRZ, CU1, CU2, CU3, SWAP, RXX, RYY, RZZ, CCX, CSWAP, GPI, GPI2, MS
 
+/////////////////////////////////////////
+// Syntax for working with Quantum Gates
+/////////////////////////////////////////
+H(q);
+let q : qubit = H(q);
+U3(1, 2, 3, q);
+let q : qubit = U3(1, 2, 3, q);
+let qs : [qubit; 2] = CX(q0, q1);
+let qs = CX(q0, q1);
+
 ///////////////////////////////////
 // Reserved Keywords for Types:
 ///////////////////////////////////
