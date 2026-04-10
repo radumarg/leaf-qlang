@@ -288,6 +288,12 @@ builtinKeyword builtinName =
 validateBuiltinCallArgs : BuiltinName -> List Expr -> Maybe String
 validateBuiltinCallArgs builtinName args =
   case builtinName of
+    BuiltinQAlloc =>
+      case args of
+        [] => Nothing
+        [_] => Nothing
+        _ => Just "qalloc expects () or a single argument"
+
     BuiltinParam =>
       case args of
         [_] => Nothing
@@ -1687,11 +1693,47 @@ mutual
       _ =>
         failAtHead (ParseExpected "expression atom") tokens
 
+  parseBuiltinArgList : Nat -> Parser (List Expr)
+  parseBuiltinArgList Z tokens =
+    Left (outOfFuelErr tokens)
+
+  parseBuiltinArgList (S fuelLeft) tokens =
+    case peekToken tokens of
+      Just (TokSym SymRParen) => Right ([], tokens)
+
+      _ =>
+        case parseExprPrec fuelLeft 0 tokens of
+          Left err => Left err
+          Right (firstArgExpr, tokensAfterFirstArg) =>
+            go fuelLeft [firstArgExpr] tokensAfterFirstArg
+    where
+      go : Nat -> List Expr -> List (Bounded Token) -> Either (Bounded ParseErr) (List Expr, List (Bounded Token))
+      go Z _ currentTokens =
+        Left (outOfFuelErr currentTokens)
+
+      go (S fuelGo) revArgExprs currentTokens =
+        case acceptSymbol SymComma currentTokens of
+          Left err => Left err
+
+          Right (False, _) =>
+            Right (reverse revArgExprs, currentTokens)
+
+          Right (True, tokensAfterComma) =>
+            case peekToken tokensAfterComma of
+              Just (TokSym SymRParen) =>
+                failAtHead (ParseExpected "expression after ',' in builtin call") tokensAfterComma
+
+              _ =>
+                case parseExprPrec fuelGo 0 tokensAfterComma of
+                  Left err => Left err
+                  Right (nextArgExpr, tokensAfterNextArg) =>
+                    go fuelGo (nextArgExpr :: revArgExprs) tokensAfterNextArg
+
   -- Builtin calls:
   --   math helpers (abs, acos, asin, atan, ceil, cos, exp, floor, ln, log2, log10, pow, round, sin, sqrt, tan)
   --   quantum helpers (qalloc, measr, reset, adjoint, discard, uncompute)
   --   misc helpers (max, min)
-  --   qalloc() / qalloc(8) / qalloc   (we allow optional parens)
+  --   qalloc() / qalloc(expr)
   parseBuiltinCall : Nat -> BuiltinName -> Parser Expr
   parseBuiltinCall Z builtinName tokens =
     failAtHead (ParseExpected "builtin call (out of fuel)") tokens
@@ -1704,13 +1746,10 @@ mutual
           Left err => Left err
 
           Right (False, tokensNoParen) =>
-            -- Only allow the no-paren form for qalloc (optional convenience)
-            case builtinName of
-              BuiltinQAlloc => Right (EBuiltinCall builtinName [], tokensNoParen)
-              _ => failAtHead (ParseExpected "builtin call must have parentheses") tokensNoParen
+            failAtHead (ParseExpected "builtin call must have parentheses") tokensNoParen
 
           Right (True, tokensAfterLParen) =>
-            case parseCommaSep0Until fuelLeft SymRParen (parseExprPrec fuelLeft 0) tokensAfterLParen of
+            case parseBuiltinArgList fuelLeft tokensAfterLParen of
               Left err => Left err
               Right (args, tokensAfterArgs) =>
                 case validateBuiltinCallArgs builtinName args of
