@@ -58,4 +58,4 @@ CSWAP(q0, q1, q2);
 GPI(1, q);
 GPI2(1, q);
 MS(1, 2, q0, q1);
-ZZ(1, q0, q1)
+ZZ(1, q0, q1);

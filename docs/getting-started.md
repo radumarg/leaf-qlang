@@ -1,9 +1,11 @@
 
+### Starting point:
+
 By and large Leaf is on purpose replicating the Rust basic syntax with minimal extensions adding support for quantum computing programming.
 
-The lifecycle of Leaf code:
+### The lifecycle of Leaf code:
 
- - Frontend (Rust like)
+ - Frontend (Rust like surface syntax)
  - Type Checker (Silq Inspired)
  - High IR Translator (1st Compiler Pass)
  - Lambda Calculus / Quantum Lambda Calculus based typed IR
@@ -12,7 +14,7 @@ The lifecycle of Leaf code:
  - Low IR Serializer (3rd Compiler Pass)
  - OpenQasm3/QIR
 
-Leaf will provide strong support for formal verification:
+### Leaf will provide strong support for formal verification:
 
 - Type safety ensured by a strong type system at both the surface-syntax level and the typed high-level IR, with extensive coverage of quantum operations and their constraints.
 - Semantic correctness of the algorithm implementation: proved over the high-level IR representation using Lean.
