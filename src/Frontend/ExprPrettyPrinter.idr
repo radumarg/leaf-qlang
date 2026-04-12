@@ -200,6 +200,7 @@ showGateNameLeaf GateCSWAP = "CSWAP"
 showGateNameLeaf GateGPI   = "GPI"
 showGateNameLeaf GateGPI2  = "GPI2"
 showGateNameLeaf GateMS    = "MS"
+showGateNameLeaf GateZZ    = "ZZ"
 
 showAssignOpLeaf : AssignOp -> String
 showAssignOpLeaf AssignEq       = "="

@@ -25,7 +25,7 @@ data GateName
   | GateSWAP
   | GateRXX | GateRYY | GateRZZ
   | GateCCX | GateCSWAP
-  | GateGPI | GateGPI2 | GateMS
+  | GateGPI | GateGPI2 | GateMS | GateZZ
 
 ------------------------------------------------------------------------------
 -- BuiltinName: built-in runtime-like functions (keywords).

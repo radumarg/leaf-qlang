@@ -186,6 +186,7 @@ gateFromString s =
     "GPI"   => Just GateGPI
     "GPI2"  => Just GateGPI2
     "MS"    => Just GateMS
+    "ZZ"    => Just GateZZ
     _       => Nothing
 
 public export

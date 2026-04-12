@@ -4,7 +4,7 @@
 // quantum computing specific types:
 bit, qubit
 
-// angle types - f32 or f64 floats ranging in [0, 2π):
+// angle types: 32-bit or 64-bit floating-point values in the range [0, 2π)
 angle32, angle64
 
 // param type:

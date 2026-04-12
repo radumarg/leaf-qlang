@@ -385,6 +385,15 @@ runQuantumGatesParseTests = do
     runParseOkTest "src/Test/Fixtures/Good/Gates/msLetInferred.lf"
                     "let qs = MS(1, 2, q0, q1);"
                     "let qs = MS(1, 2, q0, q1);"
+    runParseOkTest "src/Test/Fixtures/Good/Gates/zz.lf"
+                    "ZZ(1, q0, q1);"
+                    "ZZ(1, q0, q1);"
+    runParseOkTest "src/Test/Fixtures/Good/Gates/zzLet.lf"
+                    "let qs : [qubit; 2] = ZZ(1, q0, q1);"
+                    "let qs : [qubit; 2] = ZZ(1, q0, q1);"
+    runParseOkTest "src/Test/Fixtures/Good/Gates/zzLetInferred.lf"
+                    "let qs = ZZ(1, q0, q1);"
+                    "let qs = ZZ(1, q0, q1);"
                     
     -- Test quantum gates declarations corner cases
     runParseOkTest "src/Test/Fixtures/Good/Gates/noSpacesSingleQubitGate.lf"
