@@ -1,7 +1,7 @@
 
 ### Starting point:
 
-Leaf is deliberately designed to replicate Rust’s basic syntax, with minimal extensions for quantum programming. It follows Rust’s philosophy of strong type support and extends it to quantum operations.
+Leaf is deliberately designed to replicate Rust’s basic syntax, with minimal extensions for quantum programming. It follows Rust’s philosophy of strong static type support and extends it to quantum operations.
 
 ### The lifecycle of Leaf code:
 
