@@ -1,4 +1,4 @@
-# Leaf basic types
+### Leaf basic types
 
 ```leaf
 // quantum computing specific types:
