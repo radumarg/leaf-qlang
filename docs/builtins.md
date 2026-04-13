@@ -16,7 +16,7 @@ Trigonometric functions:
 cos(), acos(), sin(), asin(), tan(), atan()
 ```
 
-Utility functions:
+Math utility functions:
 ```leaf
 abs(), exp(), ceil(), floor(), ln(), log2(), log10(), max(), min(), round(), sqrt()
 ```

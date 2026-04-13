@@ -4,7 +4,7 @@
 - [Definitions](defining-terms.md)
 - [Keywords](keywords.md)
 - [Operators](operators.md)
-- [Builtin Functions](builtins.md)
+- [Built-ins](builtins.md)
 - [Quantum Gates](quantum-gates.md)
 - [Types](types.md)
 - [Qubit Type Annotations](type-annotations.md)
