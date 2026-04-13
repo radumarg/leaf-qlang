@@ -1,6 +1,7 @@
 # Leaf Documentation
 
 - [Getting Started](getting-started.md)
+- [Useful Definitions](defining-terms.md)
 - [Keywords](keywords.md)
 - [Operators](operators.md)
 - [Quantum Gates](quantum-gates.md)
