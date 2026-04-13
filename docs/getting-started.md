@@ -3,6 +3,8 @@
 
 Leaf is deliberately designed to replicate Rust’s basic syntax, with minimal extensions for quantum programming. It follows Rust’s philosophy of strong static type support and extends it to quantum operations.
 
+More precisely, Leaf is intended to be a statically typed, sound, and safe language, meaning that types are checked by the compiler before execution; well-typed programs come with formal guarantees that they behave according to the language’s semantics, without undefined behavior, type-related execution errors, or attempts to perform unphysical quantum operations; and bad runtime behaviors are ruled out by the type system or, where necessary, by runtime checks.
+
 ### The lifecycle of Leaf code:
 
 - Frontend: Rust-like surface syntax.
@@ -19,4 +21,4 @@ Leaf is deliberately designed to replicate Rust’s basic syntax, with minimal e
 - Type safety ensured by a strong static type system at both the surface-syntax level and the typed high-level IR, with extensive coverage of quantum operations and their constraints.
 - Semantic correctness of the algorithm implementation: proved over the high-level IR representation using Lean.
 - Correctness of language lowering: the translations to the Idris DSL and subsequently to OpenQASM3/QIR preserve the semantics of the high-level IR.
-- Idris2 DSL (low-level IR) is equipped with correctness guarantees ensuring that qubit indices are valid, control qubits are distinct from target qubits, and all control/target qubits are pairwise distinct when multiple qubits are involved.
+- The Idris2 DSL, which serves as a low-level IR, does not enforce a full typing discipline, but it is equipped with correctness guarantees expressed using Idris2’s dependent type system and builtin-in proof support, ensuring that qubit indices used in gate applications are valid, control qubits are distinct from target qubits, and all control/target qubits are pairwise distinct when multiple qubits are involved.
