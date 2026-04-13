@@ -156,6 +156,7 @@ showBuiltinNameLeaf BuiltinSin       = "sin"
 showBuiltinNameLeaf BuiltinSqrt      = "sqrt"
 showBuiltinNameLeaf BuiltinTan       = "tan"
 showBuiltinNameLeaf BuiltinUncompute = "uncompute"
+showBuiltinNameLeaf BuiltinWeaken    = "weaken"
 
 showGateNameLeaf : GateName -> String
 showGateNameLeaf GateId    = "Id"

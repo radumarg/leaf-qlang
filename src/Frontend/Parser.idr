@@ -259,6 +259,7 @@ builtinSpecs =
   , (BuiltinSqrt,       KwSqrt,       True)
   , (BuiltinTan,        KwTan,        True)
   , (BuiltinUncompute,  KwUncompute,  True)
+  , (BuiltinWeaken,     KwWeaken,     True)
   ]
 
 lookupBuiltinKeyword : BuiltinName -> List (BuiltinName, Keyword, Bool) -> Maybe Keyword

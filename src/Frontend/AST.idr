@@ -66,6 +66,7 @@ data BuiltinName
   | BuiltinSqrt
   | BuiltinTan
   | BuiltinUncompute
+  | BuiltinWeaken
 
 ------------------------------------------------------------------------------
 -- AssignOp: statement-level assignment operators
