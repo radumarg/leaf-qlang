@@ -19,7 +19,7 @@
 
 ## Documentation
 
-[Documentation](docs/README.md)
+[Docs](docs/README.md)
 
 ## Progress Status
 

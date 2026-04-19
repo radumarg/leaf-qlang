@@ -24,7 +24,7 @@ uncompsafe fn oracle (ancillas : [qubit; 3]) -> [qubit; 3] { ... }
 unitary fn grover (qubits : [qubit; 7]) -> [qubit; 7] { ... }
 ```
 
-- `general` is used to label function twhich in addition to quantum gates contain `measr`, `reset` or `discard` operations or invoking `general` functions.
+- `general` is used to label function which in addition to quantum gates contain `measr`, `reset` or `discard` operations or are invoking `general` functions.
 
 ```leaf
 general fn sample (qs : [qubit; 7]) -> [bit; 7] { ... }

@@ -13,6 +13,14 @@ let (b1 : bit, b2 : bit, b3 : bit) = measr(q1, q2, q3);
 let bs = measr(qs);
 ```
 
+Type judgements for remaining operations:
+```
+Γ ⊢ q : qubit
+--------------
+Γ ⊢ op(q) : ()
+``` 
+
+
 - Reseting qubits:
 ```leaf
 reset(q);
@@ -35,7 +43,7 @@ weaken(qs);
 ```
 
 - Automatic uncomputation: works only over circuits generated with `uncompsafe` functions:
-```leaf
+```
 uncompute(q);
 uncompute(q1, q2, q3);
 uncompute(qs);
