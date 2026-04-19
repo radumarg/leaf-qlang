@@ -1,5 +1,20 @@
 ## Quantum Gates
 
+
+Example gate applications:
+```leaf
+H(q);
+U3(1.0, 2.0, 3.0, q);
+CX(q1, q2);
+```
+
+These are built-in operations, but conceptually they borrow their qubit(s) argument(s) in order to avoid needing to write code like this: 
+```leaf
+let q = H(q);                   // INCORRECT SYNTAX
+let q = U3(1.0, 2.0, 3.0, q);   // INCORRECT SYNTAX
+let (q1, q2) = CX(q1, q2);      // INCORRECT SYNTAX
+```
+
 ### Identity
 
 ```leaf
