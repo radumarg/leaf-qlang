@@ -8,7 +8,8 @@
 - [Built-ins](builtins.md)
 - [Quantum Gates](quantum-gates.md)
 - [Function Effects](function-effects.md)
-- [Adjoint Operator](adjoint-operator.md)
-- [Qubit Type Annotations](type-annotations.md)
 - [Operations on Qubits](quantum-data-operations.md)
+- [Qubit Type Annotations](type-annotations.md)
+- [Adjoint Operator](adjoint-operator.md)
+
 
