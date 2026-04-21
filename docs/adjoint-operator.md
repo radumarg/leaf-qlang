@@ -25,5 +25,4 @@ adjoint {
     H(q1);
     CX(q1, q2)
 }
-
 ```

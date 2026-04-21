@@ -10,6 +10,7 @@
 - [Operations on Qubits](quantum-data-operations.md)
 - [Quantum Gates](quantum-gates.md)
 - [Qubit Type Annotations](type-annotations.md)
+- [Control Operators](control-operators.md)
 - [Adjoint Operator](adjoint-operator.md)
 
 
