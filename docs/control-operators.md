@@ -19,12 +19,12 @@ ctrl(q0) negctrl(q1) H(q2);
 ```
 
 ```leaf
-ctrl(q0, q1) H(q2);
-ctrl(q0, q1) CX(q2, q3);
-  
-// SAME AS:
 ctrl(q0, q1) {
   H(q2);
   CX(q2, q3);
 }
+  
+// SAME AS:
+ctrl(q0, q1) H(q2);
+ctrl(q0, q1) CX(q2, q3);
 ```
