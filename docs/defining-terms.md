@@ -2,16 +2,17 @@
 
 We present here a short glossary of useful terms in order to avoid cluttering the documentation with definitions.
 
-### What are quantum operation?
-These are first of all unitary quantum gates used to apply a unitary transformation on a single qubit or on a qubit register. Non-unitary quantum operations include: **measure**, **reset**, **discard** operations applied to qubits. Within the language, a qubit register is specified as an array of qubits without any other decoration added to it.
-
 ### What is quantum data
-By quantum data one usually means quantum bits.
+By quantum data one usually means quantum bits as a programming abstraction. However, one should keep in mind that qubits are also a physical resource in a QPU. This means that the laws pf quantum mechanics apply when dealing with qubits. Two no-go theorems are often mentioned in the context of quantum computing: the [no-cloning](defining-terms.md#no-cloning-theorem) theorem and no-program theorem.
 
-### No cloning, linear and affine qubits
-Due to the no-cloning theorem in quantum mechanics an arbitrary qubit cannot be duplicated, meaning that there is no quantum operation that given an arbitrary state $|\psi\rangle$ produces $|\psi\rangle \otimes |\psi\rangle$. Duplicating a quantum state is possible but what usually is meant by duplicating means taking an un-entangled state like for example the canonical basis state: $|0\rangle$ and generating: $|0\rangle  \otimes |0\rangle$.
+### What are quantum operations?
+These are first of all unitary quantum gates used to apply a unitary transformation on a single qubit or on a qubit register. Non-unitary quantum operations include: **measure**, **reset**, **discard** operations applied to qubits. Within the Leaf language, a qubit register is specified as an array of qubits without any other decoration added to it.
 
-Most quantum programming languages use linear or affine types to model qubits to capture this constraint in language and also the other quantum constraint given by the fact qubits cannot in all cases be simply discarded by the programmer without affecting the computation outcome. This is explained in detail in the discussion on [uncomputation](defining-terms.md#what-does-uncomputation-mean) below. A linear qubit must be used exactly once. An affine qubit must be used at most once. Leaf has the notion of borrowing qubits arguments as syntactic sugar used to replace:
+### No cloning theorem
+Due to the no-cloning theorem in quantum mechanics an arbitrary qubit cannot be copied, meaning that there is no quantum operation that given an arbitrary state $|\psi\rangle$ produces $|\psi\rangle \otimes |\psi\rangle$. Duplicating a quantum state is possible but what usually is meant by "duplicating" means making a copy of un-entangled (pure) state; for example taking the canonical basis state: $|0\rangle$ and generating: $|0\rangle  \otimes |0\rangle$.
+
+### Linear and affine qubits
+Once allocated by the software stack a quantum bit can be used by a quantum program at most once because applying an operation to a qubit will make the physical qubit transition to a different state. One could imagine a way around this limitation by making a clone of the qubit state before applying a gate but, as discussed [above](defining-terms.md#no-cloning-theorem), this operation in un-physical. Most quantum programming languages use linear or affine types to model qubits to capture this constraint in language and also the other quantum constraint given by the fact qubits cannot in all cases be simply discarded by the programmer without affecting the computation outcome. This aspect is explained in detail in the discussion on [uncomputation](defining-terms.md#what-does-uncomputation-mean) below. A linear qubit must be used exactly once. An affine qubit must be used at most once. Leaf has the notion of borrowing qubits arguments as syntactic sugar used to replace:
 
 ```leaf
 let q = f(q);
@@ -29,7 +30,7 @@ Ancilla qubits are often used as scratch qubits needed to implement oracles in g
 ### What is an oracle?
 In computer science in general and quantum computing in particular an oracle provides an answer to some problem which is treated as a black-box function. A boolean function is a function that takes one or more binary inputs and produces a boolean output. A boolean oracle is a classical function:
 
-$f:Bool^n \to Bool^m$. 
+$f:Bool^n \to Bool^m$.
 
 Such an oracle can be used to encode algebraic functions like sin() or cos() for example. Quantum oracles are not limited to boolean functions. In the case of the Grover algorithm, where the task is to search an unsorted database, the oracle may be used to mark a given quantum state we want to identify from a superposition of quantum states, a pattern which is named in literature a [phase oracle](defining-terms.md#what-is-a-phase-oracle) since we add a phase to the sought-after state. In the case of quantum phase estimation, an oracle is needed to perform a controlled unitary transformation U on a set of qubits whose eigenvalue we want to compute. For implementing Shor's algorithm, an oracle is needed to identify periodicity in quantum Fourier transforms. 
 
