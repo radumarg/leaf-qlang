@@ -104,7 +104,7 @@ Early measurement → final measurement
 
 ### What are quantum conditionals?
 
-A quantum conditional on qubit q means applying different quantum operations depending on the state of q, coherently and without measuring it. A simple example is shown below:
+A quantum conditional on qubit q means applying different quantum operations depending on the state of q, coherently, without measuring it. A simple example is shown below:
 
 Pseudocode:
 
