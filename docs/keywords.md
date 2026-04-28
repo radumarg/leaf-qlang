@@ -22,7 +22,10 @@ let
 linear
 loop
 measr
+minus
 negctrl
+one
+plus
 qalloc
 qif
 qelse
@@ -30,10 +33,14 @@ qmatch
 reset
 return
 scratch
+sqif
+sqelse
+sqmatch
 true
 unitary
 uncompute
 uncompsafe
 weaken
 while
+zero
 ```
