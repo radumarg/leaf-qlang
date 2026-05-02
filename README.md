@@ -5,8 +5,8 @@
     </td>
     <td style="vertical-align: middle;">
       <h2 style="margin: 0;">
-        A Quantum Computing<br>
-        Programming Language
+        Write Leaf, Get Lean.<br/>
+        Quantum Programming
       </h2>
       <div style="margin-top: 10px;">
         <a href="https://unitary.fund">
