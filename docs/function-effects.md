@@ -1,18 +1,18 @@
 ### Function Effects
 
-Function effects are annotations needed by the compiler (type checker specifically) to reason about Leaf code. The function effects form a lattice:
+Function effects are annotations used by the Lean type checker to verify Leaf code. The function effects form a lattice:
 
 ```leaf
 classical < uncompsafe < unitary < general
 ```
 
-- `classical` is the default effect used to label strictly classical functions i.e. function that do not have qubit arguments and do not perform any quantum operations like `qubit` generation or operations on qubits. The `classical` keyword is optional and is mainly used for generating explicit API specification:
+- `classical` is the default effect used to label strictly classical functions i.e. function that do not have qubit arguments, do not return qubits and do not perform any quantum operations like `qubit` allocation or operations on quantum data. Being the default effect, the `classical` keyword is optional and is mainly used for generating explicit API specification:
 
 ```leaf
 classical fn parity (x : u32) -> bool { ... }
 ```
 
-- Automatic [uncomputation](defining-terms.md#what-does-uncomputation-mean) works when the computation of the temporary value can be described classically. The `uncompsafe` effect is used to annotate functions containing a subset of strictly unitary quantum operations that do not generate or destroy entanglement. These basis-preserving quantum gates are used to generate circuits whose effects can be undone automatically such that the ancilla qubits can be subsequently discarded safely:
+- Automatic [uncomputation](defining-terms.md#what-does-uncomputation-mean) is possible when the computation of the temporary value can be described classically. The `uncompsafe` effect is used to annotate functions containing a subset of strictly unitary quantum operations that do not generate or destroy entanglement. These basis-preserving quantum gates are used to generate circuits whose effects can be undone automatically such that the ancilla qubits can be subsequently discarded safely:
 
 ```leaf
 uncompsafe fn oracle (ancillas : [qubit; 3]) -> [qubit; 3] { ... }
