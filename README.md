@@ -6,7 +6,7 @@
     <td style="vertical-align: middle;">
       <h2 style="margin: 0;">
         Write in Leaf, prove with Lean.<br/>
-        🍃 Quantum Programming ⚡ 
+        Quantum Programming 🍃⚡ 
       </h2>
     </td>
   </tr>
