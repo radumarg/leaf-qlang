@@ -25,7 +25,8 @@ data Keyword
   | KwLet | KwLn | KwLinear | KwLog10 | KwLog2 | KwLoop
   | KwMatch | KwMax | KwMeasr | KwMin | KwNegCtrl
   | KwParam | KwRound | KwQAlloc | KwQelse | KwQif | KwQmatch | KwReset | KwReturn
-  | KwScratch | KwSin | KwSqrt | KwTan | KwTrue | KwUncompute | KwUnitary | KwWeaken | KwWhile
+  | KwSelse | KwSif | KwSmatch | KwScratch | KwSin | KwSqrt
+  | KwTan | KwTrue | KwUncompute | KwUnitary | KwWeaken | KwWhile
 
 ----------------------------------------------------------------------
 -- Symbols: punctuation and operators.
@@ -128,7 +129,10 @@ keywordFromString s =
     "round"     => Just KwRound
     "reset"     => Just KwReset
     "return"    => Just KwReturn
+    "selse"     => Just KwSelse
+    "sif"       => Just KwSif
     "sin"       => Just KwSin
+    "smatch"    => Just KwSmatch
     "sqrt"      => Just KwSqrt
     "scratch"   => Just KwScratch
     "tan"       => Just KwTan
@@ -256,7 +260,7 @@ showKeywordLeaf kw =
     KwMeasr     => "measr"
     KwMin       => "min"
     KwNegCtrl   => "negctrl"
-    KwParam     => "Param"
+    KwParam     => "param"
     KwRound     => "round"
     KwQAlloc    => "qalloc"
     KwQelse     => "qelse"
@@ -265,7 +269,10 @@ showKeywordLeaf kw =
     KwReset     => "reset"
     KwReturn    => "return"
     KwScratch   => "scratch"
+    KwSelse     => "selse"
+    KwSif       => "sif"
     KwSin       => "sin"
+    KwSmatch    => "smatch"
     KwSqrt      => "sqrt"
     KwTan       => "tan"
     KwTrue      => "true"

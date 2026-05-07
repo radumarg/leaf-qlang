@@ -6,7 +6,7 @@ We present here a short glossary of useful terms in order to avoid cluttering th
 By quantum data one usually means qubits viewed as a programming abstraction. In quantum programming languages, qubits are typically modeled in one of two ways:
 
 - Resource-oriented model — qubits are treated as mutable computational resources whose quantum state evolves when quantum gates are applied.
-- State-oriented model — qubits are represented as language expressions denoting vectors or states in a Hilbert space, which can be composed horisontally and vertically.
+- State-oriented model — qubits are represented as language expressions denoting vectors or states in a Hilbert space, which can be composed horizontally as sequential composition and vertically as tensor products.
   
  However, one should keep in mind that qubits are also a physical resource in a QPU. This means that the laws of physics apply when dealing with qubits. Two no-go theorems are often mentioned in the context of quantum computing: the [no-cloning](defining-terms.md#no-cloning-theorem) theorem and no-program theorem.
 
