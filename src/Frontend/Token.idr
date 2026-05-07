@@ -23,10 +23,10 @@ data Keyword
   | KwBarrier |KwBreak | KwCeil | KwClassical | KwCos | KwCtrl | KwContinue | KwDiscard
   | KwElse | KwExp | KwFalse | KwFloor | KwFn | KwFor | KwGeneral | KwIf | KwImport | KwIn
   | KwLet | KwLn | KwLinear | KwLog10 | KwLog2 | KwLoop
-  | KwMatch | KwMax | KwMeasr | KwMin | KwNegCtrl
+  | KwMatch | KwMax | KwMeasr | KwMin | KwNegCtrl | KwOne
   | KwParam | KwRound | KwQAlloc | KwQelse | KwQif | KwQmatch | KwReset | KwReturn
   | KwSelse | KwSif | KwSmatch | KwScratch | KwSin | KwSqrt
-  | KwTan | KwTrue | KwUncompute | KwUnitary | KwWeaken | KwWhile
+  | KwTan | KwTrue | KwUncompute | KwUnitary | KwWeaken | KwWhile | KwZero
 
 ----------------------------------------------------------------------
 -- Symbols: punctuation and operators.
@@ -121,6 +121,7 @@ keywordFromString s =
     "measr"     => Just KwMeasr
     "min"       => Just KwMin
     "negctrl"   => Just KwNegCtrl
+    "one"       => Just KwOne
     "Param"     => Just KwParam
     "qalloc"    => Just KwQAlloc
     "qelse"     => Just KwQelse
@@ -141,6 +142,7 @@ keywordFromString s =
     "unitary"   => Just KwUnitary
     "weaken"    => Just KwWeaken
     "while"     => Just KwWhile
+    "zero"      => Just KwZero
     _           => Nothing
 
 public export
@@ -260,7 +262,8 @@ showKeywordLeaf kw =
     KwMeasr     => "measr"
     KwMin       => "min"
     KwNegCtrl   => "negctrl"
-    KwParam     => "param"
+    KwOne       => "one"
+    KwParam     => "Param"
     KwRound     => "round"
     KwQAlloc    => "qalloc"
     KwQelse     => "qelse"
@@ -280,7 +283,7 @@ showKeywordLeaf kw =
     KwUnitary   => "unitary"
     KwWeaken    => "weaken"
     KwWhile     => "while"
-
+    KwZero      => "zero"
 public export
 showSymbolLeaf : Symbol -> String
 showSymbolLeaf sym =
