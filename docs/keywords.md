@@ -11,6 +11,7 @@ ctrl
 continue
 discard
 else
+ensures
 false
 fn
 for
@@ -30,12 +31,13 @@ qalloc
 qif
 qelse
 qmatch
+requires
 reset
 return
 scratch
-sqif
-sqelse
-sqmatch
+sif
+selse
+smatch
 true
 unitary
 uncompute

@@ -6,6 +6,11 @@ Qubit operations:
 qalloc(), measr(), discard(), reset(), uncompute(), weaken()
 ```
 
+Quantum contracts:
+```leaf
+basis(), clean(), pminus(), pure(), sep(), stabilized()
+```
+
 State expression operations:
 ```leaf
 then(), tensor(), synth()

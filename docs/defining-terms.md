@@ -117,7 +117,7 @@ There are two flavors of quantum conditionals depending on the [model](defining-
 
    Pseudocode:
 
-   ```text
+   ```leaf
    if q then U else V
    ```
 
@@ -137,20 +137,20 @@ There are two flavors of quantum conditionals depending on the [model](defining-
 
    This quantum conditional was introduced in this [paper](https://arxiv.org/pdf/quant-ph/0409065) and expanded upon in the [paper here](https://arxiv.org/pdf/0806.2735). Following the authors, here is the pseudocode for defining how a cnot gate acts on the state of a qubit generating a new qubit state expression:
 
-   ```text
+   ```leaf
    qnot q = 1/sqrt(2) * (if° q then qfalse else qtrue)
    ```
 
    where:
 
-   ```text
+   ```leaf
    qfalse ≡ |0⟩
    qtrue  ≡ |1⟩
    ```
 
    QML’s if°/quantum conditional is intended for quantum control without measurement, with orthogonality restrictions such as qfalse ⟂ qtrue. The code in the two branches can be arbitrary state superpositions, not just |0⟩ and |1⟩ as long as these have the same result type, and are provably orthogonal. This orthogonality condition is essential: without it, the conditional could fail to preserve norms and inner products, and therefore could not be interpreted as a measurement-free reversible/unitary operation. Such expression may seem simple at first sight, but this construction can be very powerful. It can be used, for example, to specify a QFT transformation in code, directly from its mathematical denotation, without requiring that the programmer should to know how the corresponding QFT quantum circuit should look like:
 
-   ```text
+   ```leaf
    qft1 x =
      qcase° x of
        | qfalse => plus
@@ -159,14 +159,14 @@ There are two flavors of quantum conditionals depending on the [model](defining-
 
    where:
 
-   ```text
+   ```leaf
    plus  = (|0⟩ + |1⟩) / √2
    minus = (|0⟩ - |1⟩) / √2
    ```
 
    and:
 
-   ```text
+   ```leaf
    qft2 (x1, x0) =
      if° x1 then
        if° x0 then
