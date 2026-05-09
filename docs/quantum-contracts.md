@@ -36,9 +36,7 @@ and:
     sep
 ```
 
-Stabilizer contracts are not yet supported. Thes are useful because Clifford gates transform Pauli stabilizers into Pauli stabilizers. 
-
-For example H(q) maps:
+Stabilizer contracts are not yet supported. These are useful because Clifford gates transform Pauli stabilizers into Pauli stabilizers. For example H(q) maps:
 
 ```text
  Z(q) -> X(q)
