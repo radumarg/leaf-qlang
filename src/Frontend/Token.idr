@@ -20,12 +20,13 @@ import Frontend.AST
 public export
 data Keyword
   = KwAbs | KwAdjoint | KwAffine | KwAs | KwAcos | KwAsin | KwAtan
-  | KwBarrier |KwBreak | KwCeil | KwClassical | KwCos | KwCtrl | KwContinue | KwDiscard
-  | KwElse | KwExp | KwFalse | KwFloor | KwFn | KwFor | KwGeneral | KwIf | KwImport | KwIn
+  | KwBasis | KwBarrier | KwBreak
+  | KwCeil | KwClassical | KwClean | KwCos | KwCtrl | KwContinue | KwDiscard
+  | KwElse | KwEnsures | KwExp | KwFalse | KwFloor | KwFn | KwFor | KwGeneral | KwIf | KwImport | KwIn
   | KwLet | KwLn | KwLinear | KwLog10 | KwLog2 | KwLoop
   | KwMatch | KwMax | KwMeasr | KwMin | KwNegCtrl | KwOne
-  | KwParam | KwRound | KwQAlloc | KwQelse | KwQif | KwQmatch | KwReset | KwReturn
-  | KwSelse | KwSif | KwSmatch | KwScratch | KwSin | KwSqrt
+  | KwParam | KwPminus | KwPure | KwRound | KwQAlloc | KwQelse | KwQif | KwQmatch | KwReset | KwRequires | KwReturn
+  | KwSelse | KwSif | KwSmatch | KwScratch | KwSep | KwSin | KwSqrt | KwSynth
   | KwTan | KwTrue | KwUncompute | KwUnitary | KwWeaken | KwWhile | KwZero
 
 ----------------------------------------------------------------------
@@ -93,14 +94,17 @@ keywordFromString s =
     "as"        => Just KwAs
     "atan"      => Just KwAtan
     "barrier"   => Just KwBarrier
+    "basis"     => Just KwBasis
     "break"     => Just KwBreak
     "ceil"      => Just KwCeil
     "classical" => Just KwClassical
+    "clean"     => Just KwClean
     "cos"       => Just KwCos
     "ctrl"      => Just KwCtrl
     "continue"  => Just KwContinue
     "discard"   => Just KwDiscard
     "else"      => Just KwElse
+    "ensures"   => Just KwEnsures
     "exp"       => Just KwExp
     "false"     => Just KwFalse
     "floor"     => Just KwFloor
@@ -123,19 +127,24 @@ keywordFromString s =
     "negctrl"   => Just KwNegCtrl
     "one"       => Just KwOne
     "Param"     => Just KwParam
+    "pminus"    => Just KwPminus
+    "pure"      => Just KwPure
     "qalloc"    => Just KwQAlloc
     "qelse"     => Just KwQelse
     "qif"       => Just KwQif
     "qmatch"    => Just KwQmatch
+    "requires"  => Just KwRequires
     "round"     => Just KwRound
     "reset"     => Just KwReset
     "return"    => Just KwReturn
     "selse"     => Just KwSelse
+    "sep"       => Just KwSep
     "sif"       => Just KwSif
     "sin"       => Just KwSin
     "smatch"    => Just KwSmatch
     "sqrt"      => Just KwSqrt
     "scratch"   => Just KwScratch
+    "synth"     => Just KwSynth
     "tan"       => Just KwTan
     "true"      => Just KwTrue
     "uncompute" => Just KwUncompute
@@ -216,6 +225,7 @@ typeFromString s =
     "u64"     => Just TypPrimU64
     "u128"    => Just TypPrimU128
     "qubit"   => Just TypPrimQubit
+    "squbit"  => Just TypPrimSqubit
     _         => Nothing
 
 ----------------------------------------------------------------------
@@ -234,14 +244,17 @@ showKeywordLeaf kw =
     KwAsin      => "asin"
     KwAtan      => "atan"
     KwBarrier   => "barrier"
+    KwBasis     => "basis"
     KwBreak     => "break"
     KwCeil      => "ceil"
     KwClassical => "classical"
+    KwClean     => "clean"
     KwCos       => "cos"
     KwCtrl      => "ctrl"
     KwContinue  => "continue"
     KwDiscard   => "discard"
     KwElse      => "else"
+    KwEnsures   => "ensures"
     KwExp       => "exp"
     KwFalse     => "false"
     KwFloor     => "floor"
@@ -264,18 +277,23 @@ showKeywordLeaf kw =
     KwNegCtrl   => "negctrl"
     KwOne       => "one"
     KwParam     => "Param"
+    KwPminus    => "pminus"
+    KwPure      => "pure"
     KwRound     => "round"
     KwQAlloc    => "qalloc"
     KwQelse     => "qelse"
     KwQif       => "qif"
     KwQmatch    => "qmatch"
     KwReset     => "reset"
+    KwRequires  => "requires"
     KwReturn    => "return"
     KwScratch   => "scratch"
     KwSelse     => "selse"
+    KwSep       => "sep"
     KwSif       => "sif"
     KwSin       => "sin"
     KwSmatch    => "smatch"
+    KwSynth     => "synth"
     KwSqrt      => "sqrt"
     KwTan       => "tan"
     KwTrue      => "true"

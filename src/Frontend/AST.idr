@@ -162,6 +162,7 @@ data TypPrimName
   | TypPrimU64
   | TypPrimU128
   | TypPrimQubit
+  | TypPrimSqubit
 
 ------------------------------------------------------------------------------
 -- TypExpr: type expressions in annotations and function signatures.
