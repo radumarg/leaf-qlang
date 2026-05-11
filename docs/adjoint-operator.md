@@ -6,28 +6,20 @@ Technically these are higher-order operators that change the way functions with 
 adjoint f(q1, q2, q3);
 
 // SAME AS:
+
 adjoint {
     f(q1, q2, q3);
 }
 ```
 
-Space has the highest precedence in this case:
-
 ```leaf
-
-adjoint f(q1, q2, q3);
-
-// SAME AS:
-(adjoint f)(q1, q2, q3);
-```
-
-```leaf
-adjoint CX(q1, q2)
-adjoint H(q1);
-
-// SAME AS:
 adjoint {
-    H(q1);
-    CX(q1, q2)
+    H(&mut q1);
+    CX(&mut q1, &mut q2)
 }
+
+// SAME AS:
+
+adjoint CX(&mut q1, &mut q2)
+adjoint H(&mut q1);
 ```
