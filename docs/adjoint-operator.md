@@ -14,12 +14,12 @@ adjoint {
 
 ```leaf
 adjoint {
-    H(&mut q1);
-    CX(&mut q1, &mut q2)
+    H(&q1);
+    CX(&q1, &q2)
 }
 
 // SAME AS:
 
-adjoint CX(&mut q1, &mut q2)
-adjoint H(&mut q1);
+adjoint CX(&q1, &q2)
+adjoint H(&q1);
 ```

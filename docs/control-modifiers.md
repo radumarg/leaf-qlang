@@ -42,9 +42,9 @@ let (q0, q1, q2) = ctrl(q0 = minus, q1 = plus).H(q2);
 
 Block syntax:
 ```leaf
-ctrl(&mut q0 : one, &mut q1 : one, &mut q2 : zero) {
-  H(&mut q3);
-  CX(&mut q4, &mut q5);
+ctrl(&q0 : one, &q1 : one, &q2 : zero) {
+  H(&q3);
+  CX(&q4, &q5);
 };
 ```
 
