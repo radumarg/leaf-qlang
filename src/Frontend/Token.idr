@@ -22,38 +22,41 @@ data Keyword
   = KwAbs | KwAdjoint | KwAffine | KwAs | KwAcos | KwAsin | KwAtan
   | KwBasis | KwBarrier | KwBreak
   | KwCeil | KwClassical | KwClean | KwCos | KwCtrl | KwContinue | KwDiscard
-  | KwElse | KwEnsures | KwExp | KwFalse | KwFloor | KwFn | KwFor | KwGeneral | KwIf | KwImport | KwIn
+  | KwElse | KwEnsures | KwEnum | KwExp | KwFalse | KwFloor | KwFn | KwFor | KwGeneral | KwIf | KwImport | KwIn
   | KwLet | KwLn | KwLinear | KwLog10 | KwLog2 | KwLoop
-  | KwMatch | KwMax | KwMeasr | KwMin | KwNegCtrl | KwOne
-  | KwParam | KwPminus | KwPure | KwRound | KwQAlloc | KwQelse | KwQif | KwQmatch | KwReset | KwRequires | KwReturn
-  | KwSelse | KwSif | KwSmatch | KwScratch | KwSep | KwSin | KwSqrt | KwSynth
-  | KwTan | KwTrue | KwUncompute | KwUnitary | KwWeaken | KwWhile | KwZero
+  | KwMatch | KwMax | KwMeasr | KwMin | KwMod | KwNegCtrl | KwOne
+  | KwParam | KwPminus | KwPure | KwPub | KwRound | KwQAlloc | KwQelse | KwQif | KwQmatch | KwReset | KwRequires | KwReturn
+  | KwSelse | KwSif | KwSmatch | KwScratch | KwSep | KwSin | KwSqrt | KwStruct | KwSynth
+  | KwTan | KwTrue | KwUncompute | KwUnitary | KwUse | KwWeaken | KwWhile | KwZero
 
 ----------------------------------------------------------------------
 -- Symbols: punctuation and operators.
 ----------------------------------------------------------------------
 public export
 data Symbol
-  = SymQuestion             -- ?
-  | SymAmp                  -- &   (reserved; && exists too)
-  | SymLParen | SymRParen   -- ( )
-  | SymLBracket | SymRBracket -- [ ]
-  | SymLBrace | SymRBrace   -- { }
-  | SymComma | SymSemi | SymColon
-  | SymDot                  -- .
-  | SymBang                 -- !
-  | SymEq                   -- =
-  | SymPlus | SymMinus | SymStar | SymSlash | SymPercent
-  | SymPlusEq | SymMinusEq | SymStarEq | SymSlashEq | SymPercentEq | SymWalrusEq
-  | SymGt | SymGe | SymLt | SymLe
-  | SymEqEq | SymNotEq
-  | SymAndAnd | SymOrOr
-  | SymDotDot | SymDotDotEq -- .. and ..=
-  | SymDoubleColon          -- ::
-  | SymPipe | SymCaret      -- | and ^
-  | SymArrow                -- ->
-  | SymFatArrow             -- =>  (match arm separator)
-
+  = SymQuestion                           -- ?
+  | SymAmp                                -- &   (reserved; && exists too)
+  | SymLParen | SymRParen                 -- ( )
+  | SymLBracket | SymRBracket             -- [ ]
+  | SymLBrace | SymRBrace                 -- { }
+  | SymComma | SymSemi | SymColon         -- , ; :
+  | SymDot                                -- .
+  | SymBang                               -- !
+  | SymEq                                 -- =
+  | SymPlus | SymMinus | SymStar | SymSlash | SymPercent -- + - * / %
+  | SymPlusEq | SymMinusEq | SymStarEq | SymSlashEq | SymPercentEq
+  | SymWalrusEq                           --  :=
+  | SymGt | SymGe | SymLt | SymLe         -- >, >=, <, <=
+  | SymEqEq | SymNotEq                    -- ==, !=
+  | SymAndAnd | SymOrOr                   -- && and ||
+  | SymDotDot | SymDotDotEq               -- .. and ..=
+  | SymDoubleColon                        -- ::
+  | SymPipe | SymCaret                    -- | and ^
+  | SymArrow                              -- ->
+  | SymFatArrow                           -- =>  (match arm separator)
+  | SymShl | SymShlEq | SymShr | SymShrEq -- <<, <<=, >>, >>=
+  | SymAndEq | SymOrEq  |SymCaretEq       -- "&=", "|=", "^="
+ 
 ----------------------------------------------------------------------
 -- Token:
 --   TokIdent "x"
@@ -105,6 +108,7 @@ keywordFromString s =
     "discard"   => Just KwDiscard
     "else"      => Just KwElse
     "ensures"   => Just KwEnsures
+    "enum"      => Just KwEnum
     "exp"       => Just KwExp
     "false"     => Just KwFalse
     "floor"     => Just KwFloor
@@ -124,9 +128,11 @@ keywordFromString s =
     "max"       => Just KwMax
     "measr"     => Just KwMeasr
     "min"       => Just KwMin
+    "mod"       => Just KwMod
     "negctrl"   => Just KwNegCtrl
     "one"       => Just KwOne
     "Param"     => Just KwParam
+    "pub"       => Just KwPub
     "pminus"    => Just KwPminus
     "pure"      => Just KwPure
     "qalloc"    => Just KwQAlloc
@@ -144,6 +150,7 @@ keywordFromString s =
     "smatch"    => Just KwSmatch
     "sqrt"      => Just KwSqrt
     "scratch"   => Just KwScratch
+    "struct"    => Just KwStruct
     "synth"     => Just KwSynth
     "tan"       => Just KwTan
     "true"      => Just KwTrue
@@ -255,6 +262,7 @@ showKeywordLeaf kw =
     KwDiscard   => "discard"
     KwElse      => "else"
     KwEnsures   => "ensures"
+    KwEnum      => "enum"
     KwExp       => "exp"
     KwFalse     => "false"
     KwFloor     => "floor"
@@ -274,10 +282,12 @@ showKeywordLeaf kw =
     KwMax       => "max"
     KwMeasr     => "measr"
     KwMin       => "min"
+    KwMod       => "mod"
     KwNegCtrl   => "negctrl"
     KwOne       => "one"
     KwParam     => "Param"
     KwPminus    => "pminus"
+    KwPub       => "pub"
     KwPure      => "pure"
     KwRound     => "round"
     KwQAlloc    => "qalloc"
@@ -295,10 +305,12 @@ showKeywordLeaf kw =
     KwSmatch    => "smatch"
     KwSynth     => "synth"
     KwSqrt      => "sqrt"
+    KwStruct    => "struct"
     KwTan       => "tan"
     KwTrue      => "true"
     KwUncompute => "uncompute"
     KwUnitary   => "unitary"
+    KwUse       => "use"
     KwWeaken    => "weaken"
     KwWhile     => "while"
     KwZero      => "zero"
@@ -335,6 +347,10 @@ showSymbolLeaf sym =
     SymGe          => ">="
     SymLt          => "<"
     SymLe          => "<="
+    SymShl         => "<<"
+    SymShlEq       => "<<="
+    SymShr         => ">>"
+    SymShrEq       => ">>="
     SymEqEq        => "=="
     SymNotEq       => "!="
     SymAndAnd      => "&&"
@@ -346,6 +362,9 @@ showSymbolLeaf sym =
     SymCaret       => "^"
     SymArrow       => "->"
     SymFatArrow    => "=>"
+    SymAndEq       => "&="
+    SymOrEq        => "|="
+    SymCaretEq     => "^="
 
 public export
 implementation Show Keyword where

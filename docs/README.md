@@ -11,7 +11,7 @@
 - [Operations on Qubits](quantum-data-operations.md)
 - [Quantum Gates](quantum-gates.md)
 - [Qubit Type Annotations](type-annotations.md)
-- [Control Operators](control-operators.md)
+- [Control Gate Modifiers](control-modifiers.md)
 - [Adjoint Operator](adjoint-operator.md)
 - [Quantum Conditional and Generalization](quantum-conditionals.md)
 - [Quantum Contracts](quantum-contracts.md)

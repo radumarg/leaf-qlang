@@ -65,3 +65,24 @@ record TypedExpr where
   typ  : LeafType
   eff  : Effect
   node : TypedExprNode
+
+
+// // At IR level:
+//   data Effect
+//     = Classical
+//     | Unitary
+//     | General
+
+//   join : Effect -> Effect -> Effect
+//   join Classical   e            = e
+//   join e           Classical    = e
+//   join Unitary     Unitary      = Unitary
+//   join Unitary     General   = General
+//   join General  Unitary      = General
+//   join General  General   = General
+
+//   Prog : Effect -> Type
+
+//   compose : Prog e1 -> Prog e2 -> Prog (join e1 e2)
+//   // Subtyping in an effect lattice: Classical < Unitary < General
+//   //You could even prove: Classical implies Unitary

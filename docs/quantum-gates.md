@@ -93,7 +93,7 @@ ZZ(1.0, q1, q2);
 ```
 
 ### Barrier
-This translates directly to OpenQasm3 barrier instruction:
+Not technically a quantum gate, this translates directly to OpenQasm3 barrier instruction:
 ```leaf
 barrier();
 barrier(q1, q2);
