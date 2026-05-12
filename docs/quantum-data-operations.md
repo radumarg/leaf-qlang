@@ -1,5 +1,7 @@
 ### Operations on Qubits
 
+Qubit variables are by default linear, meaning that a qubit once declared must be used exactly once. Since qubits cannot be cloned, qubits in Leaf are mutable by default and there is no need to use the `mut` keyword to mark a qubit as such. Also, a reference to a qubit q is marked as `&q` without needing to specify that this is a mutable reference since this is the only option that is physically possible. The following operations on qubits are supported:
+
 - Allocating qubits (output type can be inferred):
 ```leaf
 let q: qubit = qalloc();
@@ -13,7 +15,7 @@ let (b1 : bit, b2 : bit, b3 : bit) = measr(q1, q2, q3);
 let bs = measr(qs);
 ```
 
-- Downgrade qubit type from `linear` to `affine`:
+- Unlike a linear qubit which must be used `exactly once`, an affine qubit must be used `at most once`. Downgrading qubit type from `linear` to `affine`:
 ```leaf
 weaken(q);
 weaken(q1, q2, q3);
@@ -27,7 +29,7 @@ reset(q1, q2, q3);
 reset(qs);
 ```
 
-- Discarding qubits:
+- Discarding it is one way to use a qubit (which by default is linear) at programatic level, without actually performing any physical operation on the corresponding physical qubit:
 ```leaf
 discard(q);
 discard(q1, q2, q3);

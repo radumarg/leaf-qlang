@@ -2,7 +2,7 @@
 // Leaf Language Syntax Specification
 //////////////////////////////////////
 
-Leaf is deliberately designed to replicate Rust’s basic syntax, with minimal extensions for quantum programming which are meant to look and feel like Rust.
+// Leaf is deliberately designed to replicate Rust’s basic syntax, with minimal extensions for quantum programming which are meant to look and feel like Rust.
 
 ////////////////////////////////////////////////////////////////////////////////
 // (1) Comments syntax for the Leaf language follows the same syntax as Rust:
@@ -152,17 +152,14 @@ let n = a.len();
 let q : qubit = qalloc();
 let qs : [qubit; 1] = qalloc(1);
 let qs : [qubit; 3] = qalloc(3);
-let (b, q) : (bit, qubit) = measr(q);
+let b : bit = measr(q);
 let b : bit = 0;
-let (bs, qs) : ([bit; 3], [qubit; 3]) = measr(qs);
-let (b, q): (bit, qubit) = measr(q);
-
+let bs : [bit; 3] = measr(qs);
 
 // inferred types for qubits and bits
 let q = qalloc();
 let qs = qalloc(3);
-let (b, q) = measr(q);
-let (b, _) = measr(q);
+let b = measr(q);
 
 ////////////////////////////////////
 // (10) Declaring bit strings
@@ -203,7 +200,7 @@ let q : qubit = H(q);
 // gate application syntax with inferred types:
 let q = H(q);
 // borrowing qubit syntax if the qubit will be needed later:
-H(&mut q);
+H(&q);
 
 // parameterized gates:
 let q : qubit = U3(1, 2, 3, q);
@@ -215,7 +212,7 @@ let qs : [qubit; 2] = CX(q0, q1);
 let qs = CX(q0, q1);
 
 let (q0, q1) = CX(q0, q1);
-CX(&mut q0, &mut q1);
+CX(&q0, &q1);
 
 ////////////////////////////////////////////
 // (13) All quantum Gates Reserved Keywords:
@@ -287,23 +284,27 @@ let (q0, q1, q2): (qubit, qubit, qubit) = ctrl(q0, q1).H(q2);
 // controlled gate with inferred types:
 let (q0, q1, q2) = ctrl(q0, q1).H(q2);
 // controlled gate with borrowed qubits:
-ctrl(&mut q0, &mut q1).H(&mut q2);
+ctrl(&q0, &q1).H(&q2);
 
 // can chain ctrl and negctrl modifiers:
-ctrl(q0).negctrl(q1).H(q2);
-ctrl(q0).ctrl(q1).H(q2);
+ctrl(&q0).negctrl(&q1).H(&q2);
+ctrl(&q0).ctrl(&q1).H(&q2);
 
 // negctrl syntax for applying gates controlled on bits being 0 instead of 1, with the same syntax variations of 'ctrl':
-negctrl(q0, q1).H(q2);
+negctrl(&q0, &q1).H(&q2);
 
 // alternative syntax for declaring controlled gates using booleans arguments:
 let (q0, q1, q2) = ctrl(q0 : one, q1 : zero).H(q2);
 let (q0, q1, q2) = ctrl(q0 : plus, q1 : minus).H(q2);
 
-let (q0, q1, q2, q3, q4, q5) = ctrl(q0 : one, q1 : one, q2 : zero) {
-  let q3 = H(q3);
-  let (q4, q5) = CX(q4, q5);
-  (q0, q1, q2, q3, q4, q5)
+ctrl(&q0).negctrl(&q1) {
+  H(&q2);
+  CX(&q3, &q4);
+};
+
+ctrl(&q0 : one, &q1 : one, &q2 : zero) {
+  H(&q3);
+  CX(&q4, &q5);
 };
 
 //////////////////////////
@@ -317,9 +318,12 @@ adjoint {
 }
 
 adjoint {
-  H(&mut q1);
-  CX(&mut q1, &mut q2)
+  H(&q1);
+  CX(&q1, &q2)
 }
+
+adjoint CX(&q1, &q2)
+adjoint H(&q1);
 
 //////////////////////////////
 // (16) Arithmetic Operators:
@@ -632,13 +636,12 @@ let qs : [qubit; 3] := fun(qs);
 //////////////////////////
 
 let q : qubit = qalloc();
-let (b, q) : (bit, qubit) = measr(q);
-let (b, _) : (bit, qubit) = measr(q);
-let (b, _) = measr(q);
+let b : bit = measr(q);
+let b : bit = measr(&q);
 
 let qs : [qubit; 3] = qalloc(3);
-let (bs, qs) : ([bit; 3], [qubit; 3]) = measr(qs);
-let (bs, _) = measr(qs);
+let bs : [bit; 3] = measr(qs);
+let bs : [bit; 3] = measr(&qs);
 
 ///////////////////////////
 // (39) Barrier statement:

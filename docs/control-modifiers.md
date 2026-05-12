@@ -33,11 +33,11 @@ let (q0, q1, q2) = ctrl(q0).ctrl(q1).H(q2);
 
 Apply control on 0/1 states:
 ```leaf
-let (q0, q1, q2) = ctrl(q0 = one, q1 = zero).H(q2);
+let (q0, q1, q2) = ctrl(q0 : one, q1 : zero).H(q2);
 ```
 Apply control on +/- states:
 ```leaf
-let (q0, q1, q2) = ctrl(q0 = minus, q1 = plus).H(q2);
+let (q0, q1, q2) = ctrl(q0 : minus, q1 : plus).H(q2);
 ```
 
 Block syntax:
