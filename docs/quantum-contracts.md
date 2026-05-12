@@ -20,7 +20,7 @@ The following contracts are supported:
 - sep() - all of these qubits are mutually separable, meaning their state is a product state.
 
 
-Contract Lattices:
+Contract lattices:
 
 ```leaf
               pure
