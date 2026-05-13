@@ -16,13 +16,15 @@ The following contracts are supported:
 - clean() - these qubits/registers are all in $|0\rangle$ state and separated from the rest of qubits.
 - basis() - each of these qubits/registers are in  either a $|0\rangle$ or a $|1\rangle$ state and separated from the rest of qubits.
 - pminus() - each of these qubits/registers are in $|+\rangle$ or $|-\rangle$ state and separated from the rest of qubits.
-- pure() - these qubits are independent of the rest of the program state. Their evaluation unaffected by other qubits measurement outcomes.
+- pure() - these qubits are independent of the rest of the program state (even if possibly entangled among them). Their evaluation is unaffected by other qubits measurement outcomes.
 - sep() - all of these qubits are mutually separable, meaning their state is a product state.
 
 
-Contract lattices:
+Contract lattices where dirty is the most general state of qubit(s) that may be entangled with others qubit(s) in the program:
 
 ```leaf
+             dirty
+               |
               pure
              /    \
         basis      pminus
@@ -33,6 +35,8 @@ Contract lattices:
 and:
 
 ```leaf
+   dirty
+     |
     sep
 ```
 

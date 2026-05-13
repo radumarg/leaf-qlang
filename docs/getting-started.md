@@ -15,7 +15,7 @@ More precisely, Leaf is intended to be a statically typed, sound, and safe langu
    - OpenQASM3 for now. 
    - QIR to be added later.
 
-### Leaf will provide strong support for formal verification:
+### Leaf will provide strong formal verification support:
 
 - Type safety is ensured by a strong static type system at both the surface-syntax level and the typed high-level IR, with rigorous coverage of quantum operations and their constraints.
 - The developer will have the tools to test the semantic correctness of his/her the algorithm implementation over the high-level IR representation of the algorithm using Lean.
