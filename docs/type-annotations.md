@@ -1,12 +1,12 @@
 ### Qubit type annotations
 
-Linear qubits must be used exactly once, no copying or discarding allowed. This is the default, so the 'linear' keyword is optional.
+Linear qubits must be used exactly once, no copying or implicit discarding allowed. Linear annotation is the default for qubits, so the 'linear' keyword is optional. Instead of implicit discarding, one should use the `discard()` method to mark qubits programmatically as discarded. However you should be aware that discarding a qubit can have [physical consequences](quantum-data-operations.md#operations-on-qubits).
 ```leaf
 let linear q: qubit = qalloc();
 let linear qs: [qubit; 2] = qalloc(2);
 ```
 
-Affine qubits must be used at most once, no copying allowed, but discarding is allowed.
+Affine qubits must be used at most once, no copying allowed but implicit discarding is allowed.
 ```leaf
 let affine q: qubit = qalloc();
 let affine qs: [qubit; 2] = qalloc(2);
