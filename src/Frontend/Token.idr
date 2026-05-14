@@ -41,7 +41,6 @@ data Symbol
   | SymLBrace | SymRBrace                 -- { }
   | SymComma | SymSemi | SymColon         -- , ; :
   | SymDot                                -- .
-  | SymBang                               -- !
   | SymEq                                 -- =
   | SymPlus | SymMinus | SymStar | SymSlash | SymPercent -- + - * / %
   | SymPlusEq | SymMinusEq | SymStarEq | SymSlashEq | SymPercentEq
@@ -330,7 +329,6 @@ showSymbolLeaf sym =
     SymSemi        => ";"
     SymColon       => ":"
     SymDot         => "."
-    SymBang        => "!"
     SymEq          => "="
     SymPlus        => "+"
     SymMinus       => "-"
