@@ -1,6 +1,6 @@
-### Function Effects
+### Functions Effect Qualifiers
 
-Function effects are annotations used by the Lean type checker to verify Leaf code. The function effects form a lattice:
+These are Rust style function qualifiers used by the Lean type checker to verify Leaf code. The function effects form a lattice:
 
 ```leaf
 classical < uncompsafe < unitary < general
