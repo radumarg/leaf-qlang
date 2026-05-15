@@ -1,0 +1,57 @@
+### Prior Work
+
+- **Knill, E.** (1996). *Conventions for Quantum Pseudocode*. Technical Report LA-UR-96-2724, Los Alamos National Laboratory. DOI: [10.2172/366453](https://doi.org/10.2172/366453). [PDF](https://www.osti.gov/servlets/purl/366453)
+
+- **van Tonder, A.** (2004). A Lambda Calculus for Quantum Computation. *SIAM Journal on Computing* 33(5), pp. 1109–1135. DOI: [10.1137/S0097539703432165](https://doi.org/10.1137/S0097539703432165). [arXiv:quant-ph/0307150](https://arxiv.org/abs/quant-ph/0307150).
+
+- **Altenkirch, T., & Grattage, J.** (2005). A Functional Quantum Programming Language. In *Proceedings of the 20th Annual IEEE Symposium on Logic in Computer Science (LICS 2005)*, pp. 249–258. IEEE Computer Society. [arXiv:quant-ph/0409065](https://arxiv.org/abs/quant-ph/0409065). Also available at the [authors' site](https://people.cs.nott.ac.uk/psztxa/publ/qml.pdf).
+
+- **Lampis, M., Ginis, K. G., & Papaspyrou, N. S.** (2006). Quantum Data and Control Made Easier. In *Proceedings of the 4th International Workshop on Quantum Programming Languages (QPL 2006)*, Oxford. [PDF](https://www.mscs.dal.ca/~selinger/qpl2006/PDFS/07-Lampis-etal.pdf). (Final journal version: *Electronic Notes in Theoretical Computer Science* 210, pp. 85–105, 2008.)
+
+- **Selinger, P., & Valiron, B.** (2006). A Lambda Calculus for Quantum Computation with Classical Control. *Mathematical Structures in Computer Science* 16(3), pp. 527–552. DOI: [10.1017/S0960129506005238](https://doi.org/10.1017/S0960129506005238). [PDF](https://inspirehep.net/files/12b87c821586bd266ff73339467f9d7c). (Conference version: TLCA 2005, *LNCS* 3461, pp. 354–368.)
+
+- **Grattage, J.** (2008). An Overview of QML with a Concrete Implementation in Haskell. In *Proceedings of the 5th International Workshop on Quantum Physics and Logic (QPL 2008)*. *Electronic Notes in Theoretical Computer Science* 270(1), pp. 165–174. [arXiv:0806.2735](https://arxiv.org/abs/0806.2735).
+
+- **Selinger, P., & Valiron, B.** (2009). Quantum Lambda Calculus. In S. Gay & I. Mackie (Eds.), *Semantic Techniques in Quantum Computation* (pp. 135–172). Cambridge University Press. DOI: [10.1017/CBO9781139193313.005](https://www.cambridge.org/core/books/abs/semantic-techniques-in-quantum-computation/quantum-lambda-calculus/0FFF8F7D9091CE1215F8D30077443777). [Preprint PDF](https://www.mscs.dal.ca/~selinger/papers/qlambdabook.pdf).
+
+- **Green, A. S., Lumsdaine, P. L., Ross, N. J., Selinger, P., & Valiron, B.** (2013). Quipper: A Scalable Quantum Programming Language. In *Proceedings of the 34th ACM SIGPLAN Conference on Programming Language Design and Implementation (PLDI 2013)*, pp. 333–342. DOI: [10.1145/2491956.2462177](https://doi.org/10.1145/2491956.2462177). [arXiv:1304.3390](https://arxiv.org/abs/1304.3390).
+
+- **Green, A. S., Lumsdaine, P. L., Ross, N. J., Selinger, P., & Valiron, B.** (2013). An Introduction to Quantum Programming in Quipper. In *Reversible Computation — 5th International Conference (RC 2013)*. *Lecture Notes in Computer Science* 7948, pp. 110–124. Springer. DOI: [10.1007/978-3-642-38986-3_10](https://doi.org/10.1007/978-3-642-38986-3_10). [arXiv:1304.5485](https://arxiv.org/abs/1304.5485).
+
+- **Ying, M., Yu, N., & Feng, Y.** (2014). *Alternation in Quantum Programming: From Superposition of Data to Superposition of Programs*. [arXiv:1402.5172](https://arxiv.org/abs/1402.5172).
+
+- **Bădescu, C., & Panangaden, P.** (2015). Quantum Alternation: Prospects and Problems. In *Proceedings of the 12th International Workshop on Quantum Physics and Logic (QPL 2015)*. *Electronic Proceedings in Theoretical Computer Science* 195, pp. 33–42. DOI: [10.4204/EPTCS.195.3](https://doi.org/10.4204/EPTCS.195.3). [arXiv:1511.01567](https://arxiv.org/abs/1511.01567).
+
+- **Paykin, J., Rand, R., & Zdancewic, S.** (2017). QWIRE: A Core Language for Quantum Circuits. In *Proceedings of the 44th ACM SIGPLAN Symposium on Principles of Programming Languages (POPL 2017)*, pp. 846–858. DOI: [10.1145/3009837.3009894](https://dl.acm.org/doi/10.1145/3009837.3009894).
+
+- **Rand, R., Paykin, J., & Zdancewic, S.** (2018). QWIRE Practice: Formal Verification of Quantum Circuits in Coq. In *Proceedings of the 14th International Conference on Quantum Physics and Logic (QPL 2017)*. *Electronic Proceedings in Theoretical Computer Science* 266, pp. 119–132. DOI: [10.4204/EPTCS.266.8](https://doi.org/10.4204/EPTCS.266.8). [arXiv:1803.00699](https://arxiv.org/abs/1803.00699).
+
+- **Bichsel, B., Baader, M., Gehr, T., & Vechev, M.** (2020). Silq: A High-Level Quantum Language with Safe Uncomputation and Intuitive Semantics. In *Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation (PLDI 2020)*, pp. 286–300. DOI: [10.1145/3385412.3386007](https://dl.acm.org/doi/10.1145/3385412.3386007). Project website: [silq.ethz.ch](https://silq.ethz.ch/).
+
+- **Fu, P., Kishida, K., & Selinger, P.** (2020). Linear Dependent Type Theory for Quantum Programming Languages. In *Proceedings of LICS 2020*. [arXiv:2004.13472](https://arxiv.org/abs/2004.13472).
+
+- **Fu, P., Kishida, K., Ross, N. J., & Selinger, P.** (2020). A Tutorial Introduction to Quantum Circuit Programming in Dependently Typed Proto-Quipper. In *Reversible Computation — 12th International Conference (RC 2020)*. *Lecture Notes in Computer Science* 12227, pp. 153–168. Springer. DOI: [10.1007/978-3-030-52482-1_9](https://doi.org/10.1007/978-3-030-52482-1_9). [Preprint PDF](https://www.mscs.dal.ca/~selinger/papers/dpq-tutorial.pdf).
+
+- **Singhal, K.** (2020). *Quantum Hoare Type Theory*. [arXiv:2012.02154](https://arxiv.org/abs/2012.02154).
+
+- **Hietala, K., Rand, R., Hung, S.-H., Li, L., & Hicks, M.** (2021). Proving Quantum Programs Correct. In *12th International Conference on Interactive Theorem Proving (ITP 2021)*. *LIPIcs* 193, 21:1–21:19. DOI: [10.4230/LIPIcs.ITP.2021.21](https://doi.org/10.4230/LIPIcs.ITP.2021.21). [arXiv:2010.01240](https://arxiv.org/abs/2010.01240) (originally submitted Oct. 2020).
+
+- **Hietala, K., Rand, R., Hung, S.-H., Wu, X., & Hicks, M.** (2021). A Verified Optimizer for Quantum Circuits. *Proceedings of the ACM on Programming Languages* 5(POPL), Article 37, pp. 1–29. DOI: [10.1145/3434318](https://dl.acm.org/doi/10.1145/3434318). [arXiv:1912.02250](https://arxiv.org/abs/1912.02250). Implementation: [SQIR/VOQC on GitHub](https://github.com/inQWIRE/SQIR).
+
+- **Botö, N., & Forslund, F.** (2021). *Compiling Quantum Conditionals in a Functional Language* (Signe). Project Report TRA105, Chalmers University of Technology. [PDF](https://odr.chalmers.se/server/api/core/bitstreams/8aa2bb64-896a-4425-a254-9cfdba34bd75/content). Repository entry: [hdl.handle.net/20.500.12380/304420](https://hdl.handle.net/20.500.12380/304420).
+
+- **Fu, P., Kishida, K., Ross, N. J., & Selinger, P.** (2022). *Proto-Quipper with Dynamic Lifting*. [arXiv:2204.13041](https://arxiv.org/abs/2204.13041). (Published version: *Proceedings of the ACM on Programming Languages* 7(POPL), Article 38, 2023.)
+
+- **Voichick, F., Li, L., Rand, R., & Hicks, M.** (2023). Qunity: A Unified Language for Quantum and Classical Computing. *Proceedings of the ACM on Programming Languages* 7(POPL), Article 32, pp. 921–951. [arXiv:2204.12384](https://arxiv.org/abs/2204.12384).
+
+- **Yuan, C., McNally, C., & Carbin, M.** (2022). Twist: Sound Reasoning for Purity and Entanglement in Quantum Programs. *Proceedings of the ACM on Programming Languages* 6(POPL), Article 30, pp. 1–32. [arXiv:2205.02287](https://arxiv.org/abs/2205.02287).
+
+- **Lubinski, T., Granade, C., Anderson, A., Geller, A., Roetteler, M., Petrenko, A., & Heim, B.** (2022). *Advancing Hybrid Quantum–Classical Computation with Real-Time Execution*. [arXiv:2206.12950](https://arxiv.org/abs/2206.12950).
+
+- **Bezganovic, V., Lewis, M., Soudjani, S., & Zuliani, P.** (2024). *High-level Quantum Algorithm Programming Using Silq*. [arXiv:2409.10231](https://arxiv.org/abs/2409.10231).
+
+- **Fu, P., Kishida, K., Ross, N. J., & Selinger, P.** (2024). Proto-Quipper with Reversing and Control. In *Proceedings of the 21st International Conference on Quantum Physics and Logic (QPL 2024)*. [arXiv:2410.22261](https://arxiv.org/abs/2410.22261).
+
+- **Faggian, C., Lopez, G., & Valiron, B.** (2024). *A Rewriting Theory for Quantum Lambda-Calculus*. [arXiv:2411.14856](https://arxiv.org/abs/2411.14856).
+
+- **Mints, M., Voichick, F., Lampropoulos, L., & Rand, R.** (2025). *Compositional Quantum Control Flow with Efficient Compilation in Qunity*. [arXiv:2508.02857](https://arxiv.org/abs/2508.02857).
