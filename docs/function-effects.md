@@ -1,4 +1,4 @@
-### Functions Effect Qualifiers
+### Function Effects
 
 These are Rust style function qualifiers used by the Lean type checker to verify Leaf code. The function effects form a lattice:
 
