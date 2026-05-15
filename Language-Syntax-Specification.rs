@@ -900,6 +900,6 @@ fn oracle(x: qubit, scratch: [qubit; 3])
 
 fn oracle(q1: qubit, q2: qubit)
   requires clean(q1)
-  ensures pminus(q2) {
+  requires pminus(q2) {
     // some code here
 }
