@@ -11,6 +11,8 @@ qif q1 {
 }
 ```
 
+It is required of f1 and f2 to be unitary functions (no discarding on input qubits, no measurements or resets), to operate on the same number of qubits, and not act on the control qubit. Any ancilla qubits created inside the two functions must be returned in a clean pure zero state and in the end safely discarded.
+
 ### Quantum Match Statements
 
 A generalization of quantum conditional for multiple branches implies coherent control over qubits `qs` without performing measurements:
@@ -30,3 +32,5 @@ A generalization of quantum conditional for multiple branches implies coherent c
     3 => f11(q1, q2, q3);
   }
 ```
+
+Similar conditions that apply to quantum conditionals apply here as well for any function in each branch.

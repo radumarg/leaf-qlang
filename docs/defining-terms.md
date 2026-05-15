@@ -137,6 +137,8 @@ There are two flavors of quantum conditionals depending on the [model](defining-
 
    $\alpha |0\rangle \otimes V|\psi\rangle + \beta |1\rangle \otimes U|\psi\rangle$
 
+   Coherent control over a superposed condition must itself be a valid reversible quantum operation. Consequently, it is required of U and V to be unitary operations (no discarding on input qubits, no measurements or resets), to operate on the same number of qubits, and do not act on the control qubit (such construction could ruin unitarity making it nonphysical). If ancilla qubits are used by U or V they must be returned by the end in a clean, pure state to avoid leaving hidden quantum garbage.
+
 2. State-oriented qubit model
 
    This quantum conditional was introduced in this [paper](https://arxiv.org/pdf/quant-ph/0409065) and expanded upon in the [paper here](https://arxiv.org/pdf/0806.2735). Following the authors, here is the pseudocode for defining how a cnot gate acts on the state of a qubit generating a new qubit state expression:
