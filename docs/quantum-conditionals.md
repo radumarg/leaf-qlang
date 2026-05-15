@@ -33,4 +33,4 @@ A generalization of quantum conditional for multiple branches implies coherent c
   }
 ```
 
-Similar conditions that apply to quantum conditionals apply here as well for any function in each branch.
+Similar conditions that apply to quantum conditionals apply here as well for functions in `qmatch` branches.
