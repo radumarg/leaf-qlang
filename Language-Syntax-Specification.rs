@@ -111,7 +111,15 @@ x[0] = 10;
 
 // assignment for tuple members:
 let mut t : (i32, f64) = (0, 0.0);
-t.0 = 3; 
+t.0 = 3;
+
+// shared reference
+let x = 10;
+let r: &i32 = &x;
+
+// mutable reference
+let mut x = 10;
+let r: &mut i32 = &mut x;
 
 ///////////////////////////////////
 // (7) Syntax for declaring arrays
@@ -718,8 +726,25 @@ fn my_function() {
   let message = "Hello!";
 }
 
+///////////////////////////////////////////////////////////
+// (47) Functions using references and mutable references:
+///////////////////////////////////////////////////////////
+
+struct Person {
+    name: String,
+    age: u32,
+}
+
+fn my_function(person: &Person) {
+    // some code
+}
+
+fn my_function(person: &mut Person) {
+    // some code
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////
-// (47) mutable variable declared in the scope of a function or outside of a function:
+// (48) mutable variable declared in the scope of a function or outside of a function:
 ///////////////////////////////////////////////////////////////////////////////////////
 
 let mut x = 0;
@@ -731,7 +756,7 @@ fn f(mut x: i32) -> i32 {
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// (48) Function effect annotations: classical, uncompsafe, unitary, general
+// (49) Function effect annotations: classical, uncompsafe, unitary, general
 //////////////////////////////////////////////////////////////////////////////
 
 // no quantum operations allowed
@@ -759,7 +784,7 @@ general fn sample(q: qubit) -> (bit, qubit) {
 }
 
 /////////////////////////
-// (49) Integer literals
+// (50) Integer literals
 /////////////////////////
 
 let x = 1000;
@@ -783,7 +808,7 @@ let z = 123i32;
 let z = 123_i32;
 
 ////////////////////////////////
-// (50) Floating point literals
+// (51) Floating point literals
 ////////////////////////////////
 
 let x = 1.0;
@@ -799,7 +824,7 @@ let f = 0.1f32;
 let f = 5f32; 
 
 ///////////////////////////////////////
-// (51) Byte and bytes string literals
+// (52) Byte and bytes string literals
 ///////////////////////////////////////
 
 let b = b'a';
@@ -811,7 +836,7 @@ let bs = b"ABC\x41";
 
 
 /////////////////////////
-// (52) Rust style enums
+// (53) Rust style enums
 /////////////////////////
 
 enum ResultBit {
@@ -822,7 +847,7 @@ enum ResultBit {
 let r = ResultBit::Zero;
 
 ///////////////////////////
-// (53) Rust style structs
+// (54) Rust style structs
 ///////////////////////////
 
 struct Point {
@@ -832,3 +857,49 @@ struct Point {
 
 let p = Point { x: 1.0, y: 2.0 };
 let x = p.x;
+
+////////////////////////////////////
+// (55) Functions Effect Qualifiers
+////////////////////////////////////
+
+// function effects are optional Rust style function qualifiers used by the Lean type checker to verify Leaf code.
+// Thse are: "classical", "uncompsafe", "unitary", "general"
+// Function qualifiers appear before fn keyword and cannot be combined with each other
+
+
+classical fn parity (x : u32) -> bool { 
+  // some code here
+}
+
+uncompsafe fn oracle (ancillas : [qubit; 3]) -> [qubit; 3] { 
+  // some code here
+}
+
+unitary fn grover (qubits : [qubit; 7]) -> [qubit; 7] { 
+  // some code here
+}
+
+general fn sample (qs : [qubit; 7]) -> [bit; 7] { 
+  // some code here
+}
+
+///////////////////////////////////////////
+// (56) Quantum Contracts Function Clauses 
+///////////////////////////////////////////
+
+// These are optional code annotations for functions that specify pre- & post-conditions that the quantum data should satisfy:
+// "requires" + "clean", "basis", "pminus", "pure"
+// "ensures" + "clean", "basis", "pminus", "pure
+// they may be used as: requires, ensures or both requires and ensures clauses, and they may be used in any combination with the function effect qualifiers from (55) as well as with each other. They must be placed after the function signature and before the function body.
+
+fn oracle(x: qubit, scratch: [qubit; 3])
+  requires clean(scratch)
+  ensures clean(scratch) {
+    // some code here
+}
+
+fn oracle(q1: qubit, q2: qubit)
+  requires clean(q1)
+  ensures pminus(q2) {
+    // some code here
+}
