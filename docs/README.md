@@ -15,3 +15,4 @@
 - [Adjoint Operator](adjoint-operator.md)
 - [Quantum Conditional and Generalization](quantum-conditionals.md)
 - [Quantum Contracts](quantum-contracts.md)
+- [Previous Work](bibliography.md)

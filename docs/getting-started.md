@@ -1,4 +1,8 @@
 
+### Motivation
+
+Leaf builds on a broad body of [research](bibliography.md) in quantum programming languages. Our goal is to make it a practical language designed for users to write easily and safely useful quantum programs that will run on today's and tomorrow's quantum processor.
+
 ### Starting point:
 
 Leaf is deliberately designed to replicate Rust’s basic syntax, with minimal extensions for quantum programming which are meant to look and feel like Rust. It follows Rust’s philosophy of strong static type support and extends it to [quantum data](defining-terms.md#what-is-quantum-data) and both unitary and non-unitary [quantum operations](defining-terms.md#what-are-quantum-operations).
