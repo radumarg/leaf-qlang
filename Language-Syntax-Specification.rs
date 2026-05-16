@@ -133,6 +133,8 @@ let us: [u64; 2] = [10, 20];
 let fs: [f64; 3] = [1.0, 2.0, 3.0];
 let bits: [bit; 3] = [1, 0, 1];
 let qubits: [qubit; 2] = qalloc(2);
+let linear qubits: [qubit; 2] = qalloc(2);
+let affine qubits: [qubit; 2] = qalloc(2);
 let angles: [angle64; 2] = [3.14, 1.57];
 let units: [(); 5] = [(), (), (), (), ()];
 let params: [param; 2] = [Param("theta"), Param("phi")];
@@ -180,12 +182,12 @@ let bs = bs"10110010";
 // (11) Syntax for type qualifiers for qubits
 //////////////////////////////////////////////
 
-// linear qubits: must be used exactly once, no copying or implicit discarding allowed (discarding must be explicit via the discard keyword)
+// linear qubits: must be consumed exactly once, no copying or implicit discarding allowed (discarding must be explicit via the discard keyword)
 // this is the default, so the 'linear' keyword is optional
 let linear q: qubit = qalloc();
 let linear qs: [qubit; 2] = qalloc(2);
 
-// affine qubits: must be used at most once, no copying allowed, but implicit discarding is allowed
+// affine qubits: must be consumed at most once, no copying allowed, but implicit discarding is allowed
 let affine q: qubit = qalloc();
 let affine qs: [qubit; 2] = qalloc(2);
 
@@ -197,8 +199,12 @@ let scratch qs: [qubit; 2] = qalloc(2);
 // both "scratch linear" and "linear scratch" are accepted syntax for linear scratch qubits, and the same applies for affine scratch qubits
 let scratch linear q: qubit = qalloc();
 let scratch linear qs: [qubit; 2] = qalloc(2);
+let linear scratch qs: [qubit; 2] = qalloc(2);
 let scratch affine q: qubit = qalloc();
 let scratch affine qs: [qubit; 2] = qalloc(2);
+let linear scratch q: qubit = qalloc();
+let affine scratch q: qubit = qalloc();
+let affine scratch qs: [qubit; 2] = qalloc(2);
 
 /////////////////////////////////////////
 // (12) Syntax for working with Quantum Gates
@@ -486,7 +492,7 @@ qmatch &qs {
 }
 
 
-smatch q {
+smatch &q {
   0 => {
       branch_expression0(data)
   }
@@ -495,18 +501,18 @@ smatch q {
   }
 }
 
-smatch qs {
-  bs"00" => branch_expression_00(data)
-  bs"01" => branch_expression_01(data)
-  bs"10" => branch_expression_10(data)
-  bs"11" => branch_expression_11(data)
+smatch &qs {
+  bs"00" => branch_expression_00(data),
+  bs"01" => branch_expression_01(data),
+  bs"10" => branch_expression_10(data),
+  bs"11" => branch_expression_11(data),
 }
 
-smatch qs {
-  0 => branch_expression_0(data)
-  1 => branch_expression_1(data)
-  2 => branch_expression_2(data)
-  3 => branch_expression_3(data)
+smatch &qs {
+  0 => branch_expression_0(data),
+  1 => branch_expression_1(data),
+  2 => branch_expression_2(data),
+  3 => branch_expression_3(data),
 }
 
 
@@ -636,7 +642,9 @@ let q = reset(q);
 reset(&q);
 
 let qs : [qubit; 3] = qalloc(3);
+// qubits are consumed and returned in reset state
 let qs = reset(qs);
+// qubits are borrowed and reset in place
 reset(&qs);
 
 //////////////////////
@@ -655,7 +663,9 @@ discard(qs);
 //////////////////////////////////////////////////////////////////////////////////
 
 let q : qubit = qalloc();
+// qubit is consumed and returned after valid uncomputation
 let q = uncompute(q);
+// qubit is borrowed and uncomputed in place
 uncompute(&q);
 
 let qs : [qubit; 3] = qalloc(3);
@@ -668,15 +678,13 @@ uncompute(&qs);
 
 let linear q : qubit = qalloc();
 let affine q = weaken(q);
-weaken(&q);
 
-let qs : [linear qubit; 3] = qalloc(3);
-let qs : [affine qubit; 3] = weaken(qs);
-weaken(&qs);
+let linear qs : [qubit; 3] = qalloc(3);
+let affine qs = weaken(qs);
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-// (38) ':=' marks the resulting qubit binding as automatically uncomputed when qubits are returned:
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// (38) ':=' marks the resulting qubit binding as automatically uncomputed when the enclosing function returns:
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 let q : qubit := fun(q);
 let qs : [qubit; 3] := fun(qs);
@@ -697,9 +705,9 @@ let bs : [bit; 3] = measr(qs);
 // qubits are borrowed
 let bs : [bit; 3] = measr(&qs);
 
-///////////////////////////
-// (40) Barrier statement:
-///////////////////////////
+////////////////////////
+// (40) Barrier syntax:
+////////////////////////
 
 barrier();
 let (q0, q1, q2) = barrier(q0, q1, q2);
@@ -770,7 +778,7 @@ fn my_function() {
 ///////////////////////////////////////////////////////////
 
 struct Person {
-    name: String,
+    id: i32,
     age: u32,
 }
 
