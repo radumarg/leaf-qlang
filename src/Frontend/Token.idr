@@ -34,8 +34,7 @@ data Keyword
 ----------------------------------------------------------------------
 public export
 data Symbol
-  = SymQuestion                           -- ?
-  | SymAmp                                -- &   (reserved; && exists too)
+  = SymAmp                                -- &   (reserved; && exists too)
   | SymLParen | SymRParen                 -- ( )
   | SymLBracket | SymRBracket             -- [ ]
   | SymLBrace | SymRBrace                 -- { }
@@ -316,7 +315,6 @@ public export
 showSymbolLeaf : Symbol -> String
 showSymbolLeaf sym =
   case sym of
-    SymQuestion    => "?"
     SymAmp         => "&"
     SymLParen      => "("
     SymRParen      => ")"
