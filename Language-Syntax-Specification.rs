@@ -18,25 +18,27 @@
 // (2) Basic Leaf Language Syntax
 ///////////////////////////////////
 
-// Statements are terminated by ';' like this is currently done in Rust except for function where return syntax which does not end with ';', again like is the convention in Rust.
+// Leaf follows Rust-style semicolon rules:
+// most statements end with ';', while the final expression of a block or function body
+// may omit ';' when its value is returned by that block or function.
 
-// Parantheses, square brackets and curly braces follow the same rules from Rust.
+// Parentheses, square brackets and curly braces follow the same rules from Rust.
 
 //////////////////////////
 // (3) Reserved Keywords: 
 //////////////////////////
 
-adjoint, affine, as, barrier, break, classical, ctrl, continue, discard, else, enum, ensures, false, fn, for, general, if, import, in, let, linear, loop, mod, measr, match, mut, minus, negctrl, one, plus, pub, qalloc, qif, qelse, qmatch, requires, reset, return, scratch, sif, selse, smatch, struct, true, unitary, uncompute, uncompsafe, use, weaken, while, zero, _
+adjoint, affine, as, barrier, basis, break, classical, clean, ctrl, continue, discard, else, enum, ensures, false, fn, for, general, if, in, let, linear, loop, mod, measr, match, mut, minus, negctrl, one, plus, pminus, pub, pure, qalloc, qif, qelse, qmatch, requires, reset, return, scratch, sif, selse, smatch, struct, true, unitary, uncompute, uncompsafe, use, weaken, while, zero, _
 
-/////////////////////////////////////////////////
-// (4) Operators Reserved Symbols and Keywords:
-/////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+// (4) Reserved delimiters, punctuation, and operator tokens:
+//////////////////////////////////////////////////////////////
 
 '(', ')', '[', ']', '{', '}', ',', ';', ':', '::', '.', '->', '?', '=', ':=', '+=', '-=', '*=', '/=', '%=', '+', '-', '*', '/', '%', '==', '!=', '>', '>=', '<', '<=', '=>', '>>', '>>=',  '<<', '<<=', '!', '&&', '||', '&', '|', '^', '..', '..=', '&=', '|=', '^='
 
-/////////////////////////////////////
-// (5) Reserved Keywords for Types:
-/////////////////////////////////////
+///////////////////////////////////////
+// (5) Built-in primitive type syntax:
+///////////////////////////////////////
 
 // quantum computing specific:
 bit, qubit
@@ -96,9 +98,8 @@ let unit : () = ();
 
 // inferred type for unit literal
 let unit = ();
-let unit : () = ();
 
-// syntax for declaring Parameters
+// syntax for declaring Parameters, here "Param" is a builtin
 let theta : param = Param("theta");
 
 // var assignment syntax for basic types:
@@ -179,16 +180,16 @@ let bs = bs"10110010";
 // (11) Syntax for type qualifiers for qubits
 //////////////////////////////////////////////
 
-// linear qubits: must be used exactly once, no copying or discarding allowed
+// linear qubits: must be used exactly once, no copying or implicit discarding allowed (discarding must be explicit via the discard keyword)
 // this is the default, so the 'linear' keyword is optional
 let linear q: qubit = qalloc();
 let linear qs: [qubit; 2] = qalloc(2);
 
-// affine qubits: must be used at most once, no copying allowed, but discarding is allowed
+// affine qubits: must be used at most once, no copying allowed, but implicit discarding is allowed
 let affine q: qubit = qalloc();
 let affine qs: [qubit; 2] = qalloc(2);
 
-// scratch qubits are automatically uncomputed at the end of their scope
+// scratch qubits are automatically uncomputed when they go out of scope
 let scratch q: qubit = qalloc();
 let scratch qs: [qubit; 2] = qalloc(2);
 
@@ -207,7 +208,8 @@ let scratch affine qs: [qubit; 2] = qalloc(2);
 let q : qubit = H(q);
 // gate application syntax with inferred types:
 let q = H(q);
-// borrowing qubit syntax if the qubit will be needed later:
+// borrowing qubit syntax if the qubit will be needed later.
+// Note that Leaf borrows for qubits intentionally differ from Rust borrows since qubits are mutable by default
 H(&q);
 
 // parameterized gates:
@@ -216,75 +218,73 @@ let q = U3(1, 2, 3, q);
 U3(1, 2, 3, &q);
 
 // two-qubit gates:
-let qs : [qubit; 2] = CX(q0, q1);
-let qs = CX(q0, q1);
-
+let (q0, q1) : (qubit, qubit) = CX(q0, q1);
 let (q0, q1) = CX(q0, q1);
 CX(&q0, &q1);
 
-////////////////////////////////////////////
-// (13) All quantum Gates Reserved Keywords:
-////////////////////////////////////////////
+///////////////////////////////////////////
+// (13) Built-in quantum gate identifiers:
+///////////////////////////////////////////
 
 Id, X, Y, Z, H, S, SDG, T, TDG, SX, SXDG, RX, RY, RZ, U1, U2, U3, CNOT, CX, CY, CZ, CS, CSDG, CT, CTDG, CSX, CSXDG, CRX, CRY, CRZ, CU1, CU2, CU3, SWAP, RXX, RYY, RZZ, CCX, CSWAP, GPI, GPI2, MS, ZZ
 
 // Single-Qubit Gates
-Id(q);
-X(q);
-Y(q);
-Z(q);
-H(q);
-S(q);
-SDG(q);
-T(q);
-TDG(q);
-SX(q);
-SXDG(q);
+let q : qubit = Id(q);
+let q : qubit = X(q);
+let q : qubit = Y(q);
+let q : qubit = Z(q);
+let q : qubit = H(q);
+let q : qubit = S(q);
+let q : qubit = SDG(q);
+let q : qubit = T(q);
+let q : qubit = TDG(q);
+let q : qubit = SX(q);
+let q : qubit = SXDG(q);
 
 // Parametric Single-Qubit Gates
-RX(1, q);
-RY(1, q);
-RZ(1, q);
-U1(1, q);
-U2(1, 2, q);
-U3(1, 2, 3, q);
+let q : qubit = RX(1, q);
+let q : qubit = RY(1, q);
+let q : qubit = RZ(1, q);
+let q : qubit = U1(1, q);
+let q : qubit = U2(1, 2, q);
+let q : qubit = U3(1, 2, 3, q);
 
 // Controlled Gates
-CNOT(q0, q1);
-CX(q0, q1);
-CY(q0, q1);
-CZ(q0, q1);
-CS(q0, q1);
-CSDG(q0, q1);
-CT(q0, q1);
-CTDG(q0, q1);
-CSX(q0, q1);
-CSXDG(q0, q1);
-CRX(1, q0, q1);
-CRY(1, q0, q1);
-CRZ(1, q0, q1);
-CU1(1, q0, q1);
-CU2(1, 2, q0, q1);
-CU3(1, 2, 3, q0, q1);
+let (q0, q1): (qubit, qubit) = CNOT(q0, q1);
+let (q0, q1) = CX(q0, q1);
+let (q0, q1) = CY(q0, q1);
+let (q0, q1) = CZ(q0, q1);
+let (q0, q1) = CS(q0, q1);
+let (q0, q1) = CSDG(q0, q1);
+let (q0, q1) = CT(q0, q1);
+let (q0, q1) = CTDG(q0, q1);
+let (q0, q1) = CSX(q0, q1);
+let (q0, q1) = CSXDG(q0, q1);
+let (q0, q1) = CRX(1, q0, q1);
+let (q0, q1) = CRY(1, q0, q1);
+let (q0, q1) = CRZ(1, q0, q1);
+let (q0, q1) = CU1(1, q0, q1);
+let (q0, q1) = CU2(1, 2, q0, q1);
+let (q0, q1) = CU3(1, 2, 3, q0, q1);
 
 // Two-Qubit Interaction Gates
-SWAP(q0, q1);
-RXX(1, q0, q1);
-RYY(1, q0, q1);
-RZZ(1, q0, q1);
+let (q0, q1) = SWAP(q0, q1);
+let (q0, q1) = RXX(1, q0, q1);
+let (q0, q1) = RYY(1, q0, q1);
+let (q0, q1) = RZZ(1, q0, q1);
 
 // Three-Qubit Gates
-CCX(q0, q1, q2);
-CSWAP(q0, q1, q2);
+let (q0, q1, q2) = CCX(q0, q1, q2);
+let (q0, q1, q2) = CSWAP(q0, q1, q2);
 
 // Ion-Native Gates
-GPI(1, q);
-GPI2(1, q);
-MS(1, 2, q0, q1);
-ZZ(1, q0, q1);
+let q : qubit = GPI(1, q);
+let q : qubit = GPI2(1, q);
+let (q0, q1) = MS(1, 2, q0, q1);
+let (q0, q1) = ZZ(1, q0, q1);
 
 //////////////////////////////////////////////////////////////////
-// (14) Apply higher-order control gate modifiers: ctrl & negctrl TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! SPACE OR DOT?
+// (14) Apply higher-order control gate modifiers: ctrl & negctrl 
 //////////////////////////////////////////////////////////////////
 
 // canonical controlled gate
@@ -298,10 +298,10 @@ ctrl(&q0, &q1).H(&q2);
 ctrl(&q0).negctrl(&q1).H(&q2);
 ctrl(&q0).ctrl(&q1).H(&q2);
 
-// negctrl syntax for applying gates controlled on bits being 0 instead of 1, with the same syntax variations of 'ctrl':
+// negctrl syntax for applying gates controlled on qubits being 0 instead of 1, with the same syntax variations of 'ctrl':
 negctrl(&q0, &q1).H(&q2);
 
-// alternative syntax for declaring controlled gates using booleans arguments:
+// alternative syntax for declaring controlled gates using explicit control-state annotations:
 let (q0, q1, q2) = ctrl(q0 : one, q1 : zero).H(q2);
 let (q0, q1, q2) = ctrl(q0 : plus, q1 : minus).H(q2);
 
@@ -319,18 +319,18 @@ ctrl(&q0 : one, &q1 : one, &q2 : zero) {
 // (15) Adjoint Operator:
 //////////////////////////
 
-adjoint f(q1, q2, q3);
+let (q1, q2, q3) = adjoint f(q1, q2, q3);
 
 adjoint {
-    f(q1, q2, q3);
+    f(&q1, &q2, &q3);
 }
 
 adjoint {
   H(&q1);
-  CX(&q1, &q2)
+  CX(&q1, &q2);
 }
 
-adjoint CX(&q1, &q2)
+adjoint CX(&q1, &q2);
 adjoint H(&q1);
 
 //////////////////////////////
@@ -388,17 +388,17 @@ if 7 > 5 {
 }
 
 //a bit may be used as a classical condition, where 0 means false and 1 means true.
-if b { X(q); }        
+if b { fun(&q); }
 // this is syntactic sugar for:
-if b == 1 { X(q); }     
+if b == 1 { fun(&q); }
 
 // if else syntax:
 let sign = if x < 0 {
-  f1();
+  f1()
 } else if x == 0 {
-  f2();
+  f2()
 } else {
-  f3();
+  f3()
 };
 
 // if else expression syntax:
@@ -414,16 +414,16 @@ if x < 0 {
 // (20) Quantum conditionals syntax:
 ////////////////////////////////////
 
-  // q is a qubit
-  qif q {
+  // q is a qubit and must be borrowed
+  qif &q {
     // some unitary operation(s)
-    X(t);
+    X(&t);
   } qelse { // qelse branch is NOT optional in this case
     // some other unitary operation(s)
-    H(t);
+    H(&t);
   }
 
-  sif q {
+  sif &q {
     // some quantum state expression
   } selse { // selse branch is NOT optional in this case
     // some other quantum state expression
@@ -448,7 +448,7 @@ fn main() {
   }
 }
 
-match b {
+match boolflag {
   true => { /* todo */ }
   false => { /* todo */ }
 }
@@ -458,32 +458,57 @@ match x {
   _ => { /* other */ }
 }
 
-///////////////////////////////////
-// (22) Quantum match expressions: TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! smatch
-///////////////////////////////////
+/////////////////////////////////////////////////////
+// (22) Quantum match expressions qmatch and smatch:
+/////////////////////////////////////////////////////
 
-qmatch q {
+qmatch &q {
   0 => {
-      U0(data);
+      branch_statement0(data);
   }
   1 => {
-      U1(data);
+      branch_statement1(data);
   }
 }
 
-qmatch qs {
-  bs"00" => { U00(data); }
-  bs"01" => { U01(data); }
-  bs"10" => { U10(data); }
-  bs"11" => { U11(data); }
+qmatch &qs {
+  bs"00" => { branch_statement00(data); }
+  bs"01" => { branch_statement01(data); }
+  bs"10" => { branch_statement10(data); }
+  bs"11" => { branch_statement11(data); }
 }
 
-qmatch qs {
-  0 => { U00(data); }
-  1 => { U01(data); }
-  2 => { U10(data); }
-  3 => { U11(data); }
+qmatch &qs {
+  0 => { branch_statement0(data); }
+  1 => { branch_statement1(data); }
+  2 => { branch_statement2(data); }
+  3 => { branch_statement3(data); }
 }
+
+
+smatch q {
+  0 => {
+      branch_expression0(data)
+  }
+  1 => {
+      branch_expression1(data)
+  }
+}
+
+smatch qs {
+  bs"00" => branch_expression_00(data)
+  bs"01" => branch_expression_01(data)
+  bs"10" => branch_expression_10(data)
+  bs"11" => branch_expression_11(data)
+}
+
+smatch qs {
+  0 => branch_expression_0(data)
+  1 => branch_expression_1(data)
+  2 => branch_expression_2(data)
+  3 => branch_expression_3(data)
+}
+
 
 ////////////////////////////////
 // (23) Rust block expressions:
@@ -607,10 +632,12 @@ let x = b as i32;
 //////////////////////
 
 let q : qubit = qalloc();
-reset(q);
+let q = reset(q);
+reset(&q);
 
 let qs : [qubit; 3] = qalloc(3);
-reset(qs);
+let qs = reset(qs);
+reset(&qs);
 
 //////////////////////
 // (35) Discard qubits:
@@ -622,44 +649,64 @@ discard(q);
 let qs : [qubit; 3] = qalloc(3);
 discard(qs);
 
-/////////////////////////////////////////////////////////////////////////////
-// (36) uncompute qubits (return qubits to the |0> state without measuring):
-/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
+// (36) uncompute qubits: reverse the reversible computation that produced these
+// qubits, returning them to |0⟩ when the compiler can verify that this is valid.
+//////////////////////////////////////////////////////////////////////////////////
 
 let q : qubit = qalloc();
-uncompute(q);
+let q = uncompute(q);
+uncompute(&q);
 
 let qs : [qubit; 3] = qalloc(3);
-uncompute(qs);
+let qs = uncompute(qs);
+uncompute(&qs);
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-// (37) trigger automatic uncomputing on resulting qubits when new qubits are returned from a function:
-////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+// (37) Weakening qubits: demote linear qubits to affine:
+//////////////////////////////////////////////////////////
+
+let linear q : qubit = qalloc();
+let affine q = weaken(q);
+weaken(&q);
+
+let qs : [linear qubit; 3] = qalloc(3);
+let qs : [affine qubit; 3] = weaken(qs);
+weaken(&qs);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// (38) ':=' marks the resulting qubit binding as automatically uncomputed when qubits are returned:
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 let q : qubit := fun(q);
 let qs : [qubit; 3] := fun(qs);
 
 //////////////////////////
-// (38) Measuring qubits:
+// (39) Measuring qubits:
 //////////////////////////
 
 let q : qubit = qalloc();
+// qubit is consumed permanently
 let b : bit = measr(q);
+// qubit is borrowed
 let b : bit = measr(&q);
 
 let qs : [qubit; 3] = qalloc(3);
+// qubits are consumed permanently
 let bs : [bit; 3] = measr(qs);
+// qubits are borrowed
 let bs : [bit; 3] = measr(&qs);
 
 ///////////////////////////
-// (39) Barrier statement:
+// (40) Barrier statement:
 ///////////////////////////
 
 barrier();
-barrier(q0, q1, q2);
+let (q0, q1, q2) = barrier(q0, q1, q2);
+barrier(&q0, &q1);
 
 ////////////////////////////////////////////////////////////////////
-// (40) declaring and using modules and imports follows Rust syntax:
+// (41) declaring and using modules and imports follows Rust syntax:
 ////////////////////////////////////////////////////////////////////
 
 mod my_module {
@@ -669,22 +716,14 @@ mod my_module {
     }
 }
 
-mod "my_library.lf";
+mod my_library;
 
 use my_library::helper;
 
 fn main() {
-    helper();
+    let q = helper();
+    discard(q);
 }
-
-////////////////////////////////////////////////////////////////////////////
-// (41) scratch qubit, gets uncomputed automatically when goes out of scope. 
-////////////////////////////////////////////////////////////////////////////
-
-let scratch q: qubit = qalloc();
-let scratch q = qalloc();
-let scratch qs: [qubit; 8] = qalloc(8);
-let scratch qs = qalloc(8);
 
 //////////////////////////
 // (42) Functions syntax:
@@ -723,7 +762,7 @@ fn f() -> f64 {
 // (46) Variable declared in the scope of a function:
 //////////////////////////////////////////////////////
 fn my_function() {
-  let message = "Hello!";
+  let i = 10;
 }
 
 ///////////////////////////////////////////////////////////
@@ -743,12 +782,14 @@ fn my_function(person: &mut Person) {
     // some code
 }
 
-///////////////////////////////////////////////////////////////////////////////////////
-// (48) mutable variable declared in the scope of a function or outside of a function:
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+// (48) mutable variable declared in a local block scope:
+//////////////////////////////////////////////////////////
 
-let mut x = 0;
-x = x + 1;
+{
+  let mut x = 0;
+  x = x + 1;
+}
 
 fn f(mut x: i32) -> i32 {
   x += 1;
@@ -756,18 +797,20 @@ fn f(mut x: i32) -> i32 {
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// (49) Function effect annotations: classical, uncompsafe, unitary, general
+// (49) Functions Effect Qualifiers: classical, uncompsafe, unitary, general
 //////////////////////////////////////////////////////////////////////////////
+
+// function effects are optional Rust style function qualifiers used by the Leaf type checker to verify Leaf code.
+// Function qualifiers appear before fn keyword and cannot be combined with each other
 
 // no quantum operations allowed
 classical fn f(x: i32) -> i32 {
   x + 1
 }
 
-// marks some qubits that can be uncomputed safely
+// only uncomputation-safe quantum operations allowed
 uncompsafe fn f(q: qubit) -> qubit {
   let q = X(q);
-  let q = H(q);
   q
 }
 
@@ -779,7 +822,7 @@ unitary fn f(q: qubit) -> qubit {
 }
 
 // may include measurements, reset, discard quantum operations
-general fn sample(q: qubit) -> (bit, qubit) {
+general fn sample(q: qubit) -> bit {
   measr(q)
 }
 
@@ -858,43 +901,16 @@ struct Point {
 let p = Point { x: 1.0, y: 2.0 };
 let x = p.x;
 
-////////////////////////////////////
-// (55) Functions Effect Qualifiers
-////////////////////////////////////
-
-// function effects are optional Rust style function qualifiers used by the Lean type checker to verify Leaf code.
-// Thse are: "classical", "uncompsafe", "unitary", "general"
-// Function qualifiers appear before fn keyword and cannot be combined with each other
-
-
-classical fn parity (x : u32) -> bool { 
-  // some code here
-}
-
-uncompsafe fn oracle (ancillas : [qubit; 3]) -> [qubit; 3] { 
-  // some code here
-}
-
-unitary fn grover (qubits : [qubit; 7]) -> [qubit; 7] { 
-  // some code here
-}
-
-general fn sample (qs : [qubit; 7]) -> [bit; 7] { 
-  // some code here
-}
-
-///////////////////////////////////////////
-// (56) Quantum Contracts Function Clauses 
-///////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+// (55) Quantum Contracts Function Clauses: requires, ensures + clean, basis, pminus, pure
+///////////////////////////////////////////////////////////////////////////////////////////
 
 // These are optional code annotations for functions that specify pre- & post-conditions that the quantum data should satisfy:
-// "requires" + "clean", "basis", "pminus", "pure"
-// "ensures" + "clean", "basis", "pminus", "pure
-// they may be used as: requires, ensures or both requires and ensures clauses, and they may be used in any combination with the function effect qualifiers from (55) as well as with each other. They must be placed after the function signature and before the function body.
+// they may be used as: requires, ensures or both requires and ensures clauses, and they may be used in any combination with the function effect qualifiers from (48) as well as with each other. They must be placed after the function signature and before the function body.
 
-fn oracle(x: qubit, scratch: [qubit; 3])
-  requires clean(scratch)
-  ensures clean(scratch) {
+fn oracle(x: qubit, ancillas: [qubit; 3])
+  requires clean(ancillas)
+  ensures clean(ancillas) {
     // some code here
 }
 
