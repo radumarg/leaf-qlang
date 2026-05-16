@@ -24,6 +24,8 @@ uncompsafe fn oracle (ancillas : [qubit; 3]) -> [qubit; 3] { ... }
 unitary fn grover (qubits : [qubit; 7]) -> [qubit; 7] { ... }
 ```
 
+A function that internally allocates scratch qubits should count as unitary only if those qubits are provably returned clean and separable before return.
+
 - `general` is used to classify functions which in addition to quantum gates contain `measr`, `reset` or `discard` operations or are invoking `general` functions.
 
 ```leaf
