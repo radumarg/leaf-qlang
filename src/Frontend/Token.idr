@@ -41,6 +41,7 @@ data Symbol
   | SymLBrace | SymRBrace                 -- { }
   | SymComma | SymSemi | SymColon         -- , ; :
   | SymDot                                -- .
+  | SymBang                               -- !
   | SymEq                                 -- =
   | SymPlus | SymMinus | SymStar | SymSlash | SymPercent -- + - * / %
   | SymPlusEq | SymMinusEq | SymStarEq | SymSlashEq | SymPercentEq
@@ -115,7 +116,6 @@ keywordFromString s =
     "for"       => Just KwFor
     "general"   => Just KwGeneral
     "if"        => Just KwIf
-    "import"    => Just KwImport
     "in"        => Just KwIn
     "let"       => Just KwLet
     "linear"    => Just KwLinear
@@ -269,7 +269,6 @@ showKeywordLeaf kw =
     KwFor       => "for"
     KwGeneral   => "general"
     KwIf        => "if"
-    KwImport    => "import"
     KwIn        => "in"
     KwLet       => "let"
     KwLn        => "ln"
@@ -363,6 +362,7 @@ showSymbolLeaf sym =
     SymAndEq       => "&="
     SymOrEq        => "|="
     SymCaretEq     => "^="
+    SymBang        => "!"
 
 public export
 implementation Show Keyword where
