@@ -34,7 +34,7 @@ adjoint, affine, as, barrier, basis, break, classical, clean, ctrl, continue, di
 // (4) Reserved delimiters, punctuation, and operator tokens:
 //////////////////////////////////////////////////////////////
 
-'(', ')', '[', ']', '{', '}', ',', ';', ':', '::', '.', '->', '?', '=', ':=', '+=', '-=', '*=', '/=', '%=', '+', '-', '*', '/', '%', '==', '!=', '>', '>=', '<', '<=', '=>', '>>', '>>=',  '<<', '<<=', '!', '&&', '||', '&', '|', '^', '..', '..=', '&=', '|=', '^='
+'(', ')', '[', ']', '{', '}', ',', ';', ':', '::', '.', '->', '=', ':=', '+=', '-=', '*=', '/=', '%=', '+', '-', '*', '/', '%', '==', '!=', '>', '>=', '<', '<=', '=>', '>>', '>>=',  '<<', '<<=', '!', '&&', '||', '&', '|', '^', '..', '..=', '&=', '|=', '^='
 
 ///////////////////////////////////////
 // (5) Built-in primitive type syntax:
@@ -172,9 +172,9 @@ let q = qalloc();
 let qs = qalloc(3);
 let b = measr(q);
 
-////////////////////////////////////
-// (10) Declaring bit strings
-////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// (10) Declaring bit strings (not bytestring literals, but as arrays of bits):
+////////////////////////////////////////////////////////////////////////////////
 
 let bs = bs"10110010";
 
@@ -219,9 +219,9 @@ let q = H(q);
 H(&q);
 
 // parameterized gates:
-let q : qubit = U3(1, 2, 3, q);
-let q = U3(1, 2, 3, q);
-U3(1, 2, 3, &q);
+let q : qubit = U3(1.0, 2.0, 3.0, q);
+let q = U3(1.0, 2.0, 3.0, q);
+U3(1.0, 2.0, 3.0, &q);
 
 // two-qubit gates:
 let (q0, q1) : (qubit, qubit) = CX(q0, q1);
@@ -249,11 +249,11 @@ let q : qubit = SXDG(q);
 
 // Parametric Single-Qubit Gates
 let q : qubit = RX(1, q);
-let q : qubit = RY(1, q);
-let q : qubit = RZ(1, q);
-let q : qubit = U1(1, q);
-let q : qubit = U2(1, 2, q);
-let q : qubit = U3(1, 2, 3, q);
+let q : qubit = RY(1.0, q);
+let q : qubit = RZ(1.0, q);
+let q : qubit = U1(1.0, q);
+let q : qubit = U2(1.0, 2.0, q);
+let q : qubit = U3(1.0, 2.0, 3.0, q);
 
 // Controlled Gates
 let (q0, q1): (qubit, qubit) = CNOT(q0, q1);
@@ -266,28 +266,28 @@ let (q0, q1) = CT(q0, q1);
 let (q0, q1) = CTDG(q0, q1);
 let (q0, q1) = CSX(q0, q1);
 let (q0, q1) = CSXDG(q0, q1);
-let (q0, q1) = CRX(1, q0, q1);
-let (q0, q1) = CRY(1, q0, q1);
-let (q0, q1) = CRZ(1, q0, q1);
-let (q0, q1) = CU1(1, q0, q1);
-let (q0, q1) = CU2(1, 2, q0, q1);
-let (q0, q1) = CU3(1, 2, 3, q0, q1);
+let (q0, q1) = CRX(1.0, q0, q1);
+let (q0, q1) = CRY(1.0, q0, q1);
+let (q0, q1) = CRZ(1.0, q0, q1);
+let (q0, q1) = CU1(1.0, q0, q1);
+let (q0, q1) = CU2(1.0, 2.0, q0, q1);
+let (q0, q1) = CU3(1.0, 2.0, 3.0, q0, q1);
 
 // Two-Qubit Interaction Gates
 let (q0, q1) = SWAP(q0, q1);
-let (q0, q1) = RXX(1, q0, q1);
-let (q0, q1) = RYY(1, q0, q1);
-let (q0, q1) = RZZ(1, q0, q1);
+let (q0, q1) = RXX(1.0, q0, q1);
+let (q0, q1) = RYY(1.0, q0, q1);
+let (q0, q1) = RZZ(1.0, q0, q1);
 
 // Three-Qubit Gates
 let (q0, q1, q2) = CCX(q0, q1, q2);
 let (q0, q1, q2) = CSWAP(q0, q1, q2);
 
 // Ion-Native Gates
-let q : qubit = GPI(1, q);
-let q : qubit = GPI2(1, q);
-let (q0, q1) = MS(1, 2, q0, q1);
-let (q0, q1) = ZZ(1, q0, q1);
+let q : qubit = GPI(1.0, q);
+let q : qubit = GPI2(1.0, q);
+let (q0, q1) = MS(1.0, 2.0, q0, q1);
+let (q0, q1) = ZZ(1.0, q0, q1);
 
 //////////////////////////////////////////////////////////////////
 // (14) Apply higher-order control gate modifiers: ctrl & negctrl 
@@ -368,9 +368,9 @@ let e = a || b;
 // (18) Bitwise operations:
 ////////////////////////////
 
-let and_ : bit = a & b;
-let or_  : bit = a | b;
-let xor_ : bit = a ^ b;
+let and_bit : bit = a & b;
+let or_bit  : bit = a | b;
+let xor_bit : bit = a ^ b;
 
 x &= y;
 x |= y;
@@ -435,22 +435,34 @@ if x < 0 {
     // some other quantum state expression
   }
 
-////////////////////////////////
-// (21) Classical match syntax:
-////////////////////////////////
+///////////////////////////////////////////
+// (21) Classical Rust style match syntax:
+///////////////////////////////////////////
+
+match x {
+    1 => foo(),   // comma required
+    2 => bar(),   // comma required
+    _ => baz(),   // trailing comma optional
+}
+
+match x {
+    1 => { foo(); }   // comma optional
+    2 => { bar(); }
+    _ => { baz(); }
+}
 
 fn main() {
   let day = 4;
 
   match day {
-    1 => { /* todo */ },
-    2 => { /* todo */ },
-    3 => { /* todo */ },
-    4 => { /* todo */ },
-    5 => { /* todo */ },
-    6 => { /* todo */ },
-    7 => { /* todo */ },
-    _ => { /* todo */ },
+    1 => { day_is_monday(); }
+    2 => { day_is_tuesday(); }
+    3 => { day_is_wednesday(); }
+    4 => { day_is_thursday(); }
+    5 => { day_is_friday(); }
+    6 => { day_is_saturday(); }
+    7 => { day_is_sunday(); }
+    _ => { day_is_invalid(); }
   }
 }
 
@@ -470,7 +482,7 @@ match x {
 
 qmatch &q {
   0 => {
-      branch_statement0(data);
+      branch_statement0(data)
   }
   1 => {
       branch_statement1(data);
@@ -805,7 +817,7 @@ fn f(mut x: i32) -> i32 {
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// (49) Functions Effect Qualifiers: classical, uncompsafe, unitary, general
+// (49) Function Effect Qualifiers: classical, uncompsafe, unitary, general
 //////////////////////////////////////////////////////////////////////////////
 
 // function effects are optional Rust style function qualifiers used by the Leaf type checker to verify Leaf code.
